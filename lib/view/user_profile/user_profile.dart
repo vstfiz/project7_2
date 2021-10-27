@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:project7_2/custom/globals.dart';
 import 'package:project7_2/database/firebase.dart';
+import 'package:project7_2/services/auth/auth.dart';
+import 'package:project7_2/view/auth/signin.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -393,6 +396,33 @@ class MapScreenState extends State<ProfilePage>
                                         ),
                                       ],
                                     )),
+                                new Container(
+                                  width: Globals.width * 0.9,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20.0),
+                                    color: Colors.red,
+                                  ),
+                                  margin: EdgeInsets.only(left: Globals.width *0.05,top: 50,),
+                                  height: 60,
+                                  child: TextButton(
+                                    onPressed: () async {
+                                      await googleSignIn.signOut();
+                                      await auth.signOut();
+                                      setState(() {
+                                        auth = null;
+                                        Globals.user = null;
+                                      });
+
+                                      Navigator.of(context).pushReplacement(
+                                          new MaterialPageRoute(builder: (context) {
+                                            return SignIn();
+                                          }));
+                                    },
+                                    child: Text('Log Out',style: TextStyle(
+                                      color: Colors.white
+                                    ),),
+                                  ),
+                                ),
                                 !_status
                                     ? _getActionButtons()
                                     : new Container(),

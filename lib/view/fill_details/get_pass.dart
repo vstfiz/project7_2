@@ -87,7 +87,7 @@ class _GetPassState extends State<GetPass> {
                   child: Container(
                     height: h * 0.05,
                     width: w * 0.9,
-                    padding: EdgeInsets.symmetric(vertical: 15,horizontal: 20),
+                    padding: EdgeInsets.symmetric(horizontal: 20),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: Colors.white,
@@ -113,7 +113,7 @@ class _GetPassState extends State<GetPass> {
                   child: Container(
                     height: h * 0.05,
                     width: w * 0.9,
-                    padding: EdgeInsets.symmetric(vertical: 15,horizontal: 20),
+                    padding: EdgeInsets.symmetric(horizontal: 20),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: Colors.white,

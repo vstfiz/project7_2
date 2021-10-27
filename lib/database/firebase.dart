@@ -24,9 +24,16 @@ class FirebaseDB {
     var ref = firestore.collection('users');
     QuerySnapshot querySnapshot = await ref.where('uid', isEqualTo: Globals.uid).get();
     List<DocumentSnapshot> ds = querySnapshot.docs;
-    Globals.user = new User(ds.single['dp'], ds.single['name'], Globals.uid,
-          ds.single['email'],ds.single['favorite_sport'],ds.single['favorite_team'],ds.single['position'],ds.single['experience'],ds.single['rating']);
-      return false;
+      try{
+        Globals.user = new User(ds.single['dp'], ds.single['name'], Globals.uid,
+            ds.single['email'],ds.single['favorite_sport'],ds.single['favorite_team'],ds.single['position'],ds.single['experience'],ds.single['rating']);
+        return false;
+      }
+      catch(e){
+        Globals.user = new User('-','-', Globals.uid,'-','-','-','-','-','-');
+        return false;
+      }
+
   }
 
   static Future<void> createUser(String uid, String email,

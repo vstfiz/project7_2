@@ -1,4 +1,8 @@
 
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,6 +22,37 @@ class _FindPLacesState extends State<FindPLaces> {
   GoogleMapController _controller;
   Location _location = Location();
 
+  Future<void> _loadingDialog(String value) {
+    return showDialog<void>(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) => AlertDialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0)),
+            backgroundColor: Colors.white,
+            content: Container(
+                height: 60,
+                child: Center(
+                  child: Row(
+                    children: <Widget>[
+                      CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Text(
+                        value,
+                        style: TextStyle(
+                            fontFamily: "Livvic",
+                            fontSize: 23,
+                            letterSpacing: 1),
+                      )
+                    ],
+                  ),
+                ))));
+  }
+
 
   void _onMapCreated(GoogleMapController _cntlr)
   {
@@ -31,17 +66,6 @@ class _FindPLacesState extends State<FindPLaces> {
     });
   }
 
-  List<BottomNavigationBarItem> tabs = [
-    new BottomNavigationBarItem(
-        icon: Icon(Icons.rss_feed,color: Colors.black,size:40),
-        label: 'News & Fixtures'),
-    new BottomNavigationBarItem(
-        icon: Icon(Icons.location_on_rounded,color: Colors.black,size:30),
-        label: 'Find Game'),
-    new BottomNavigationBarItem(
-        icon: Icon(Icons.send,color: Colors.black,size:40),
-        label: 'Locker Room')
-  ];
 
   static final CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(37.42796133580664, -122.085749655962),
@@ -54,77 +78,11 @@ class _FindPLacesState extends State<FindPLaces> {
         child: SafeArea(
           top: true,
           child: Scaffold(
-            bottomNavigationBar: ClipRRect(
-              child: BottomNavigationBar(
-                backgroundColor: Colors.red,
-                items: tabs,
-                elevation: 20,
-                currentIndex: 1,
-                onTap: (index) {
-                  // print(index);
-                  // if (index == 0) {
-                  //   setState(() {
-                  //     Globals.currentTab = 0;
-                  //   });
-                  //   Globals.pageController.jumpToPage(0);
-                  // } else if (index == 1) {
-                  //   if (Globals.user != null) {
-                  //     setState(() {
-                  //       Globals.currentTab = 1;
-                  //     });
-                  //     Globals.pageController.jumpToPage(1);
-                  //   } else {
-                  //     Navigator.push(context, MaterialPageRoute(builder: (_) {
-                  //       return SignIn();
-                  //     }));
-                  //   }
-                  // } else if (index == 2) {
-                  //   print(Globals.feedType);
-                  //   if(Globals.currentTab == 2){
-                  //     setState(() {
-                  //       Globals.feedType = !Globals.feedType;
-                  //     });
-                  //     Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context){return HomeScreen();}));
-                  //   }
-                  //   else{
-                  //     setState(() {
-                  //       Globals.currentTab = 2;
-                  //     });
-                  //     Globals.pageController.jumpToPage(2);
-                  //   }
-                  //
-                  // } else if (index == 3) {
-                  //   String shareMessage;
-                  //   if(Globals.feedType){
-                  //     shareMessage = Globals.currentFeed.claim.length > 250
-                  //         ? Globals.currentFeed.claim.substring(0, 250) +
-                  //         "...\n\nTo read more, download: \n\n https://play.google.com/store/apps/details?id=com.codingdevs.facto_user"
-                  //         : Globals.currentFeed.claim +
-                  //         "\n\nTo read more, download: \n\n https://play.google.com/store/apps/details?id=com.codingdevs.facto_user";
-                  //   }
-                  //   else{
-                  //     shareMessage = Globals.currentFeed.claim.length > 250
-                  //         ? Globals.currentFeed.claim.substring(0, 250) +
-                  //         "...\n\nTo read more, download: \n\n https://play.google.com/store/apps/details?id=com.codingdevs.facto_user"
-                  //         : Globals.currentFeed.claim +
-                  //         "\n\nTo read more, download: \n\n https://play.google.com/store/apps/details?id=com.codingdevs.facto_user";
-                  //
-                  //   }
-                  //   Share.share(shareMessage);
-                  // }
-                },
-                type: BottomNavigationBarType.shifting,
-              ),
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10),
-                topRight: Radius.circular(10),
-              ),
-            ),
-              backgroundColor: Colors.grey[300],
               body: Stack(
                 alignment: Alignment.center,
                 children: [
                   Container(
+                    color:  Color(0xFF121217),
                     height: h,
                     width: w,
                   ),
@@ -136,31 +94,85 @@ class _FindPLacesState extends State<FindPLaces> {
                         }));
                       },
                       icon: Icon(
-                        Icons.person,
-                        color: Colors.black,
-                        size: 40,
+                        Icons.menu,
+                        color: Colors.white,
+                        size: 28,
                       ),
                     ),
-                    right: w * 0.05,
+                    left: w * 0.01,
                     top: h * 0.01,
                   ),
                   Positioned(
-                    child: IconButton(
-                      onPressed: () async{
-                        await auth.signOut();
-                        Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context){return SignIn();}));
-                      },
-                      icon: new Image.asset('assets/images/back_flip.png'),
-                      iconSize: 40,
+                    child: Container(
+                      width: w * 0.5,
+                      height: h * 0.025,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[800].withOpacity(0.7),
+                        borderRadius: BorderRadius.circular(20)
+                      ),
                     ),
-                    left: w * 0.05,
-                    top: h * 0.01,
+                    left: w * 0.15,
+                    top: h * 0.022,
                   ),
+                  Positioned(child: Row(
+                    children: [
+                      Container(
+                          width: w * 0.07,
+                          height:  w * 0.07,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                              color: Colors.grey[800].withOpacity(0.7),
+                          ),
+                        child: Icon(Icons.calendar_today_outlined,color: Colors.white,size: 16,),
+                        ),
+                      SizedBox(width: 10,),
+                      Container(
+                        width: w * 0.07,
+                        height:  w * 0.07,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.grey[800].withOpacity(0.7),
+                        ),
+                        child: TextButton(
+                          child: Icon(Icons.add,color: Colors.white,size: 18,),
+                          onPressed: () async{
+                            _loadingDialog('Creating Locker Room');
+                            var ref = FirebaseFirestore.instance;
+                            await ref.collection('lockerRooms').add({
+                              'createdByUid': Globals.uid,
+                              'ownerName' : Globals.name,
+                              'sports': 'Football',
+                              'location' : 'NH2 Delhi Kanpur Highway',
+                            });
+                            await Globals.lockerRooms.add(1);
+                            Timer t = new Timer(new Duration(seconds: 3),(){
+                              Navigator.pop(context);
+                              setState(() {
+                                Globals.currentTab = 2;
+                                Globals.pageController.jumpToPage(2);
+                              });
+                            });
+                          },
+                        ),
+                      ),
+                      SizedBox(width: 10,),
+                      Container(
+                        width: w * 0.07,
+                        height:  w * 0.07,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.grey[800].withOpacity(0.7),
+                        ),
+                        child: Icon(Icons.person,color: Colors.white,size: 18,),
+                      ),
+                    ],
+                  ),
+                  right: w * 0.01,top: h * 0.02,),
                   Positioned(
-                      top: h *0.18,
+                      top: h *0.15,
                       left: w *0.0,
                       child: Container(
-                        height: h * 0.65,
+                        height: h * 0.75,
                         width: w,
                         child: GoogleMap(
                             onMapCreated: _onMapCreated,

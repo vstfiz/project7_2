@@ -8,10 +8,10 @@
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
    <application
-        android:label="project7_2"
+        android:label="Pitch Stories"
         android:icon="@mipmap/ic_launcher">
        <meta-data android:name="com.google.android.geo.API_KEY"
-           android:value="AIzaSyBKlnkwACYbrZswfgM0pIxm0V9weZyndxU"
+           android:value="AIzaSyAXCJc8nuZUxeNtHg_RBibCiqJFOK43PjQ"
            />
         <activity
             android:name=".MainActivity"
