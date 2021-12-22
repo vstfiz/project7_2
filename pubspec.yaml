@@ -42,6 +42,9 @@ dependencies:
   cloud_firestore: ^2.4.0
   firebase_core: ^1.4.0
   email_validator: ^2.0.1
+  google_fonts: ^2.1.0
+  auto_size_text: ^3.0.0
+  page_transition: ^2.0.4
 
 dev_dependencies:
   flutter_test:
@@ -64,6 +67,16 @@ flutter:
     - assets/images/background.png
     - assets/images/back_drop_filter.png
     - assets/images/locker_room.png
+    - assets/images/onboarding/
+    - assets/images/alerts/
+    - assets/images/left_panel/
+    - assets/images/onboarding/layer_2.png
+    - assets/images/onboarding/layer_3.png
+    - assets/images/onboarding/stack.png
+    - assets/images/onboarding/location.png
+    - assets/images/onboarding/logo.png
+    - assets/images/onboarding/phone_shape.png
+    - assets/images/onboarding/phone_data.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

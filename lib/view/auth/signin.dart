@@ -11,6 +11,7 @@ import 'package:project7_2/view/auth/verify_mail.dart';
 import 'package:project7_2/view/fill_details/add_details.dart';
 import 'package:project7_2/view/fill_details/fill_details.dart';
 import 'package:project7_2/view/find_places/find_places.dart';
+import 'package:project7_2/view/home_screen/home_screen.dart';
 import 'package:toast/toast.dart';
 
 class SignIn extends StatefulWidget {
@@ -149,14 +150,14 @@ class _SignInState extends State<SignIn> {
                             // Navigator.pop(context);
                             Navigator.of(context).pushReplacement(
                                 new MaterialPageRoute(builder: (context) {
-                                  return FindPLaces();
+                                  return HomeScreen();
                                 }));
                           } else {
                             print('con 2');
                             // Navigator.pop(context);
                             Navigator.of(context).pushReplacement(
                                 new MaterialPageRoute(builder: (context) {
-                                  return FindPLaces();
+                                  return HomeScreen();
                                 }));
                           }
 

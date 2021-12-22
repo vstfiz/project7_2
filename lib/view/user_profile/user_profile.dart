@@ -5,6 +5,8 @@ import 'package:project7_2/custom/globals.dart';
 import 'package:project7_2/database/firebase.dart';
 import 'package:project7_2/services/auth/auth.dart';
 import 'package:project7_2/view/auth/signin.dart';
+import 'package:project7_2/view/new_ui/onboarding/login.dart';
+import 'package:project7_2/view/new_ui/onboarding/loginSocial.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -415,7 +417,7 @@ class MapScreenState extends State<ProfilePage>
 
                                       Navigator.of(context).pushReplacement(
                                           new MaterialPageRoute(builder: (context) {
-                                            return SignIn();
+                                            return LoginSocial();
                                           }));
                                     },
                                     child: Text('Log Out',style: TextStyle(

@@ -3,11 +3,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:project7_2/custom/globals.dart';
 import 'package:project7_2/services/auth/auth.dart';
-import 'package:project7_2/view/auth/signin.dart';
-import 'package:project7_2/view/home_screen/home_screen.dart';
+import 'package:project7_2/view/new_ui/onboarding/splash.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Paint.enableDithering = true;
   await Firebase.initializeApp();
   runApp(MyApp());
 }
@@ -34,17 +34,18 @@ class MyApp extends StatelessWidget {
                   Globals.uid = u.uid;
                   Globals.name = u.displayName;
                   print(u.uid);
-                  if (u.emailVerified) {
-                    return HomeScreen();
-                  } else {
-                    if (u.isAnonymous) {
-                      return SignIn();
-                    } else {
-                      return SignIn();
-                    }
-                  }
+                  Globals.hasLogin = true;
+                  // if (u.emailVerified) {
+                  //   return Splash();
+                  // } else {
+                  //   if (u.isAnonymous) {
+                  //     return Splash();
+                  //   } else {
+                  //     return Splash();
+                  //   }
+                  // }
                 }
-                return SignIn();
+                return Splash();
               },
             ));
       });

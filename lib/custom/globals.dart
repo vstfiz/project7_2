@@ -19,6 +19,19 @@ class Globals{
   static String email;
   static String dob;
   static String dp;
+  static bool hasLogin = false;
+  static String status = 'rate';
   static PageController pageController = new PageController(initialPage: 1);
   static var screens = [NewsNFixtures(),FindPLaces(),LockerRoom(),];
+
+  static double getHeight(double val){
+    return (val/899) * height;
+  }
+  static double getHeightLeftPanel(double val){
+    return (val/1035) * height;
+  }
+
+  static double getWidth(double val){
+    return (val/414) * width;
+  }
 }
