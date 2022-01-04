@@ -6,9 +6,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:project7_2/custom/globals.dart';
 import 'package:project7_2/services/auth/auth.dart';
-import 'package:project7_2/view/fill_details/add_details.dart';
-import 'package:project7_2/view/fill_details/fill_details.dart';
+
 import 'package:project7_2/view/find_places/find_places.dart';
+import 'package:project7_2/view/new_ui/onboarding/fill.dart';
 
 class VerifyMail extends StatefulWidget {
   _VerifyMailState createState() => _VerifyMailState();
@@ -67,7 +67,7 @@ class _VerifyMailState extends State<VerifyMail> {
     if(u.emailVerified){
       t.cancel();
       Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context){
-        return AddDetails();
+        return Data();
       }));
     }
   }
@@ -136,7 +136,7 @@ class _VerifyMailState extends State<VerifyMail> {
                       child: TextButton(
                         onPressed: () {
                           Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context){
-                            return AddDetails();
+                            return Data();
                           }));
                         },
                         child:

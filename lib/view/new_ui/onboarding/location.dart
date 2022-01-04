@@ -26,10 +26,10 @@ class _LocationState extends State<Location> {
             Positioned(
                 top: Globals.getHeight(601),
                 child: Container(
+                  width: Globals.width * 0.9,
                   child: AutoSizeText(
-                    'Play Wherever You Are',
-                    minFontSize: 26,
-                    maxFontSize: 30,
+                    'Play Wherever You Are',maxLines: 1,
+                    textAlign: TextAlign.center,
                     style: GoogleFonts.montserrat(
                         color: Colors.white, fontSize: 26,fontWeight: FontWeight.w600),
                   ),
@@ -37,10 +37,10 @@ class _LocationState extends State<Location> {
             Positioned(
                 top: Globals.getHeight(641),
                 child: Container(
+                  width: Globals.width * 0.9,
                   child: AutoSizeText(
-                    'OnFeild helps you find local games you love, so\nyou can always choose your time  and place.',
-                    minFontSize: 14,
-                    maxFontSize: 30,
+                    'OnFeild helps you find local games you love, so\nyou can always choose your time  and place.',maxLines: 2,
+                    textAlign: TextAlign.center,
                     style: GoogleFonts.montserrat(
                         color: Colors.white, fontSize: 14,fontWeight: FontWeight.w400),
                   ),
@@ -70,8 +70,8 @@ class _LocationState extends State<Location> {
                   ),
                 )),
             Positioned(
-                top: Globals.getHeight(859),
-                child: Container(
+                bottom: Globals.getHeight(23),
+                child: Container(width: Globals.getWidth(40),
                   child:TextButton(
                     onPressed: (){
                       Navigator.of(context).pushReplacement( PageTransition(
@@ -80,8 +80,8 @@ class _LocationState extends State<Location> {
                           duration: new Duration(milliseconds: 300),
                           curve: Curves.easeInOut));
                     },
-                    child:  Text(
-                      'Skip',
+                    child:  AutoSizeText(
+                      'Skip',maxLines: 1,
                       style: GoogleFonts.montserrat(
                           color: Colors.white, fontSize: 10,fontWeight: FontWeight.w600),
                     ),

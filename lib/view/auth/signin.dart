@@ -8,8 +8,6 @@ import 'package:project7_2/services/auth/auth.dart';
 import 'package:project7_2/view/auth/get_started.dart';
 import 'package:project7_2/view/auth/login.dart';
 import 'package:project7_2/view/auth/verify_mail.dart';
-import 'package:project7_2/view/fill_details/add_details.dart';
-import 'package:project7_2/view/fill_details/fill_details.dart';
 import 'package:project7_2/view/find_places/find_places.dart';
 import 'package:project7_2/view/home_screen/home_screen.dart';
 import 'package:toast/toast.dart';
@@ -91,8 +89,8 @@ class _SignInState extends State<SignIn> {
                             print(res);
                             if (res) {
                               print('con1 ');
-                              await FirebaseDB.createUser(uc.uid, uc.email,
-                                       uc.displayName, context);
+                              // await FirebaseDB.createUser(uc.uid, uc.email,
+                              //          uc.displayName, context);
                                 // Navigator.pop(context);
                                 Navigator.of(context).pushReplacement(
                                     new MaterialPageRoute(builder: (context) {
@@ -145,8 +143,8 @@ class _SignInState extends State<SignIn> {
                           print(res);
                           if (res) {
                             print('con1 ');
-                            await FirebaseDB.createUser(uc.uid, uc.email,
-                                uc.displayName, context);
+                            // await FirebaseDB.createUser(uc.uid, uc.email,
+                            //     uc.displayName, context);
                             // Navigator.pop(context);
                             Navigator.of(context).pushReplacement(
                                 new MaterialPageRoute(builder: (context) {

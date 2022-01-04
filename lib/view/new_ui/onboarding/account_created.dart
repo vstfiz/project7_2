@@ -51,7 +51,7 @@ class _AccountCreatedState extends State<AccountCreated> {
                     child: Text(
                       'Login to your account'.toUpperCase(),
                       style: GoogleFonts.montserrat(
-                          fontSize: 17,
+                          fontSize: Globals.getFontSize(17),
                           fontWeight: FontWeight.w400,
                           letterSpacing: 2.89,
                           color: Colors.white),
@@ -75,7 +75,7 @@ class _AccountCreatedState extends State<AccountCreated> {
                   child: Text('Open Gmail',
                       style: TextStyle(
                           color: Colors.white,
-                          fontSize: 14.6,
+                          fontSize: Globals.getFontSize(14.6),
                           letterSpacing: 1.238)),
                 )),
             Positioned(

@@ -11,6 +11,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:project7_2/custom/globals.dart';
 import 'package:project7_2/view/new_ui/onboarding/forgot_password.dart';
+import 'package:project7_2/view/new_ui/onboarding/otp_login.dart';
 
 import 'lockerroom_welcome.dart';
 import 'signup.dart' as s;
@@ -22,7 +23,7 @@ class PhoneLogin extends StatefulWidget {
 class _PhoneLoginState extends State<PhoneLogin> {
   bool corrPhone = false;
   TextEditingController _phoneController = new TextEditingController();
-  RegExp _phoneRegex = new RegExp(r'^[1-9][0-9]{9}$');
+  RegExp _phoneRegex = new RegExp(r'^(\+[0-9]{1,3})[0-9]{9}$');
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +41,13 @@ class _PhoneLoginState extends State<PhoneLogin> {
                   height: Globals.getHeight(58),
                   width: Globals.width * 0.8,
                   child: TextButton(
+                    onPressed: (){
+                      Navigator.of(context).pushReplacement(PageTransition(
+                          type: PageTransitionType.rightToLeft,
+                          child: OTPLogin(_phoneController.text),
+                          duration: new Duration(milliseconds: 300),
+                          curve: Curves.easeInOut));
+                    },
                     child: Text('SEND OTP',style: GoogleFonts.montserrat(fontSize: 20,fontWeight: FontWeight.w400, letterSpacing: 2.89, color: Colors.white),),
                   ),
                   decoration: BoxDecoration(

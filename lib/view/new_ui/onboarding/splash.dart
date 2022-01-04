@@ -1,70 +1,175 @@
 import 'dart:async';
-
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/rendering.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:page_transition/page_transition.dart';
+import 'package:flutter/services.dart';
 import 'package:project7_2/custom/globals.dart';
+import 'package:project7_2/database/firebase.dart';
 import 'package:project7_2/view/home_screen/home_screen.dart';
-import 'package:project7_2/view/new_ui/alerts/status.dart';
-import 'package:project7_2/view/new_ui/left_side_navigation/left_panel.dart';
-import 'package:project7_2/view/new_ui/left_side_navigation/notifications.dart';
-import 'package:project7_2/view/new_ui/onboarding/account_created.dart';
-import 'package:project7_2/view/new_ui/onboarding/fill.dart';
-import 'package:project7_2/view/new_ui/onboarding/forgot_password.dart';
-import 'package:project7_2/view/new_ui/onboarding/language.dart';
+import 'package:project7_2/view/new_ui/onboarding/gender.dart';
 import 'package:project7_2/view/new_ui/onboarding/location.dart' as l;
-import 'package:project7_2/view/new_ui/onboarding/lockerroom_welcome.dart';
-import 'package:project7_2/view/new_ui/onboarding/phone_login.dart';
-import 'package:project7_2/view/new_ui/onboarding/validate_password.dart';
 
-class Splash extends StatefulWidget {
-  _SplashState createState() => _SplashState();
+
+class SplashScreen extends StatefulWidget {
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _SplashState extends State<Splash> {
+class _SplashScreenState extends State<SplashScreen>
+    with TickerProviderStateMixin {
+  AnimationController scaleController;
+  Animation<double> scaleAnimation;
+
+  double _opacity = 0;
+  bool _value = true;
+
   @override
   void initState() {
-    // TODO: implement initState
-    _navigate();
+    super.initState();
+    _getUser();
+    _finishAnimation();
   }
 
-  _navigate() {
-    Timer t = new Timer(new Duration(milliseconds: 700), () {
-     if(Globals.hasLogin){
-       Navigator.of(context).pushReplacement(PageTransition(
-           type: PageTransitionType.rightToLeft,
-           child: HomeScreen(),
-           duration: new Duration(milliseconds: 300),
-           curve: Curves.easeInOut));
-     }
-     else{
-       Navigator.of(context).pushReplacement(PageTransition(
-           type: PageTransitionType.rightToLeft,
-           child: l.Location(),
-           duration: new Duration(milliseconds: 300),
-           curve: Curves.easeInOut));
-     }
+  _finishAnimation(){
+
+    scaleController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 600),
+    )..addStatusListener(
+          (status) {
+        if (status == AnimationStatus.completed) {
+          if(Globals.hasLogin){
+            if(hasData){
+              Navigator.of(context).pushReplacement(
+                ThisIsFadeRoute(
+                  route: HomeScreen(),
+                ),
+              );
+            }
+            else{
+              Navigator.of(context).pushReplacement(
+                ThisIsFadeRoute(
+                  route: SelectGender(),
+                ),
+              );
+            }
+          }
+          else{
+            Navigator.of(context).pushReplacement(
+              ThisIsFadeRoute(
+                route: HomeScreen(),
+              ),
+            );
+          }
+          Timer(
+            Duration(milliseconds: 300),
+                () {
+              scaleController.reset();
+            },
+          );
+        }
+      },
+    );
+
+    scaleAnimation =
+        Tween<double>(begin: 0.0, end: 12).animate(scaleController);
+
+    Timer(Duration(milliseconds: 600), () {
+      setState(() {
+        _opacity = 1.0;
+        _value = false;
+      });
+    });
+    Timer(Duration(milliseconds: 2000), () {
+      setState(() {
+        scaleController.forward();
+      });
     });
   }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    scaleController.dispose();
+    super.dispose();
+  }
+
+  bool hasData;
+  _getUser()async{
+    hasData = await FirebaseDB.getUserDetails(Globals.uid, context);
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Center(
-        child: Container(
-          width: Globals.width * 0.5,
-          height: Globals.height * 0.15,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('assets/images/onboarding/logo.png'),
-                  fit: BoxFit.contain)),
+      body:
+      Center(
+        child: AnimatedOpacity(
+          curve: Curves.fastLinearToSlowEaseIn,
+          duration: Duration(seconds: 6),
+          opacity: _opacity,
+          child: AnimatedContainer(
+            curve: Curves.fastLinearToSlowEaseIn,
+            duration: Duration(seconds: 2),
+            height: _value ? 50 : 200,
+            width: _value ? 50 : 200,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage('assets/images/onboarding/logo.png'),
+                    fit: BoxFit.contain)
+            ),
+            child: Center(
+
+              child: AnimatedBuilder(
+                animation: scaleAnimation,
+                builder: (c, child) => Transform.scale(
+                  scale: scaleAnimation.value,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            image: AssetImage('assets/images/onboarding/logo.png'),
+                            fit: BoxFit.contain)
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
         ),
       ),
     );
   }
 }
+
+class ThisIsFadeRoute extends PageRouteBuilder {
+  final Widget page;
+  final Widget route;
+
+  ThisIsFadeRoute({this.page, this.route})
+      : super(
+    pageBuilder: (
+        BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+        ) =>
+    page,
+    transitionsBuilder: (
+        BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+        Widget child,
+        ) =>
+        FadeTransition(
+          opacity: animation,
+          child: route,
+        ),
+  );
+}
+
+
+
+
+
+

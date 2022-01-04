@@ -8,6 +8,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:project7_2/custom/globals.dart';
 import 'package:project7_2/view/new_ui/left_side_navigation/notifications.dart';
+import 'package:project7_2/view/new_ui/left_side_navigation/teams.dart';
+import 'package:project7_2/view/new_ui/left_side_navigation/venue_bookings.dart';
 
 class LeftPanel extends StatefulWidget{
   _LeftPanelState createState()=> _LeftPanelState();
@@ -126,24 +128,33 @@ class _LeftPanelState extends State<LeftPanel>{
             Positioned(
               top: Globals.getHeightLeftPanel(376),
               left: Globals.getWidth(37),
-              child: Container(
-                width: Globals.width,
-                height: Globals.getHeightLeftPanel(40),
-                child: Row(
-                  children: [
-                    Image.asset('assets/images/left_panel/teams.png',height: Globals.getHeightLeftPanel(30),width: Globals.getWidth(30),),
-                    SizedBox(
-                      width: Globals.getWidth(30),
-                    ),
-                    Text(
-                      'Teams',
-                      style: GoogleFonts.montserrat(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white
+              child: GestureDetector(
+                onTap: (){
+                  Navigator.of(context).push(PageTransition(
+                      type: PageTransitionType.rightToLeft,
+                      child: Teams(),
+                      duration: new Duration(milliseconds: 300),
+                      curve: Curves.easeInOut));
+                },
+                child: Container(
+                  width: Globals.width,
+                  height: Globals.getHeightLeftPanel(40),
+                  child: Row(
+                    children: [
+                      Image.asset('assets/images/left_panel/teams.png',height: Globals.getHeightLeftPanel(30),width: Globals.getWidth(30),),
+                      SizedBox(
+                        width: Globals.getWidth(30),
                       ),
-                    )
-                  ],
+                      Text(
+                        'Teams',
+                        style: GoogleFonts.montserrat(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -279,26 +290,33 @@ class _LeftPanelState extends State<LeftPanel>{
             Positioned(
               top: Globals.getHeightLeftPanel(816),
               left: Globals.getWidth(37),
-              child: Container(
-                width: Globals.width,
-                height: Globals.getHeightLeftPanel(40),
-                child: Row(
-                  children: [
-                    Image.asset('assets/images/left_panel/venue.png',height: Globals.getHeightLeftPanel(30),width: Globals.getWidth(30),),
-                    SizedBox(
-                      width: Globals.getWidth(30),
-                    ),
-                    Text(
-                      'Venue',
-                      style: GoogleFonts.montserrat(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white
+              child: GestureDetector(
+                onTap: (){ Navigator.of(context).push(PageTransition(
+                    type: PageTransitionType.rightToLeft,
+                    child: VenueBookings(),
+                    duration: new Duration(milliseconds: 300),
+                    curve: Curves.easeInOut));},
+                child: Container(
+                  width: Globals.width,
+                  height: Globals.getHeightLeftPanel(40),
+                  child: Row(
+                    children: [
+                      Image.asset('assets/images/left_panel/venue.png',height: Globals.getHeightLeftPanel(30),width: Globals.getWidth(30),),
+                      SizedBox(
+                        width: Globals.getWidth(30),
                       ),
-                    )
-                  ],
+                      Text(
+                        'Venue',
+                        style: GoogleFonts.montserrat(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              ),
+              )
             ),
             Positioned(
               top: Globals.getHeightLeftPanel(873),

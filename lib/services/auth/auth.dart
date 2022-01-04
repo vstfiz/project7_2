@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:project7_2/custom/globals.dart';
 import 'package:toast/toast.dart';
 
 GoogleSignIn googleSignIn = GoogleSignIn();
@@ -34,13 +35,15 @@ Future<User> verifyPhone(String phone, BuildContext context) async {
   };
   try {
     await auth.verifyPhoneNumber(
-        phoneNumber: '+91'+phone,
+        phoneNumber: phone,
         codeAutoRetrievalTimeout: (String verId) {
           _verificationId = verId;
         },
         codeSent: smsOTPSent,
-        timeout: const Duration(seconds: 60),
-        verificationCompleted: (AuthCredential phoneAuthCredential) {},
+        timeout: const Duration(seconds: 30),
+        verificationCompleted: (AuthCredential phoneAuthCredential) async{
+          UserCredential linkauthresult=await FirebaseAuth.instance.currentUser.linkWithCredential(phoneAuthCredential);
+        },
         verificationFailed: (FirebaseAuthException exception) {
           // Navigator.pop(context, exception.message);
         });
@@ -56,12 +59,52 @@ Future<User> signInWithPhone(String otp,BuildContext context) async {
       verificationId: _verificationId,
       smsCode: otp,
     );
+    UserCredential linkauthresult=await FirebaseAuth.instance.currentUser.linkWithCredential(credential);
     final User user = (await auth.signInWithCredential(credential)).user;
     print("Successfully signed in UID: ${user.uid}");
-    Navigator.of(context).pushReplacementNamed('/dashboard');
     return user;
   } catch (e) {
     print("Failed to sign in: " + e.toString());
+    return null;
+  }
+}
+Future<User> verifyPhoneNew(String phone, BuildContext context) async {
+  auth = FirebaseAuth.instance;
+  // auth.setSettings(appVerificationDisabledForTesting: true);
+  final PhoneCodeSent smsOTPSent = (String verId, [int forceCodeResend]) {
+    _verificationId = verId;
+  };
+  try {
+    await auth.verifyPhoneNumber(
+        phoneNumber: phone,
+        codeAutoRetrievalTimeout: (String verId) {
+          _verificationId = verId;
+        },
+        codeSent: smsOTPSent,
+        timeout: const Duration(seconds: 30),
+        verificationCompleted: (AuthCredential phoneAuthCredential) async{
+        },
+        verificationFailed: (FirebaseAuthException exception) {
+          // Navigator.pop(context, exception.message);
+        });
+  } catch (e) {
+    Navigator.pop(context, (e as PlatformException).message);
+  }
+}
+
+Future<User> signInWithPhoneNew(String otp,BuildContext context) async {
+  print('entered otp is ${otp}');
+  try {
+    final AuthCredential credential = PhoneAuthProvider.credential(
+      verificationId: _verificationId,
+      smsCode: otp,
+    );
+    final User user = (await auth.signInWithCredential(credential)).user;
+    print("Successfully signed in UID: ${user.uid}");
+    return user;
+  } catch (e) {
+    print("Failed to sign in: " + e.toString());
+    return null;
   }
 }
 

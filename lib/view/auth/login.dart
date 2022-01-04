@@ -11,9 +11,8 @@ import 'package:project7_2/model/user.dart';
 import 'package:project7_2/services/auth/auth.dart';
 import 'package:project7_2/view/auth/login.dart';
 import 'package:project7_2/view/auth/verify_mail.dart';
-import 'package:project7_2/view/fill_details/add_details.dart';
-import 'package:project7_2/view/fill_details/fill_details.dart';
 import 'package:project7_2/view/find_places/find_places.dart';
+import 'package:project7_2/view/new_ui/onboarding/fill.dart';
 import 'package:toast/toast.dart';
 
 class LogIn extends StatefulWidget {
@@ -338,7 +337,7 @@ class _LogInState extends State<LogIn> {
                         onPressed: () {
                           Navigator.of(context).push(
                               new MaterialPageRoute(builder: (context) {
-                                return FillDetails();
+                                return Data();
                               }));
                         },
                         child: Text('Create Account'.toUpperCase(),

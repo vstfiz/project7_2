@@ -7,22 +7,12 @@ class FirebaseDB {
   static Future<bool> getUserDetails(String uid, BuildContext context) async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     var ref = firestore.collection('users');
-    QuerySnapshot querySnapshot = await ref.where('uid', isEqualTo: uid).get();
+    QuerySnapshot querySnapshot = await ref.where('uid', isEqualTo: Globals.uid).get();
     List<DocumentSnapshot> ds = querySnapshot.docs;
     if (ds.length == 0) {
-      return true;
-    } else {
-      Globals.user = new User(
-          ds.single['dp'],
-          ds.single['name'],
-          uid,
-          ds.single['email'],
-          ds.single['favorite_sport'],
-          ds.single['favorite_team'],
-          ds.single['position'],
-          ds.single['experience'],
-          ds.single['rating']);
       return false;
+    } else {
+      return true;
     }
   }
 
@@ -53,26 +43,20 @@ class FirebaseDB {
     }
   }
 
-  static Future<void> createUser(
-      String uid, String email, String name, BuildContext context) async {
-    print('part2');
+  static Future<void> createUser(BuildContext context) async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     var ref = firestore.collection('users');
-    String dp =
-        'https://png.pngtree.com/png-vector/20190224/ourlarge/pngtree-vector-avatar-icon-png-image_699747.jpg';
     try {
       await ref.add({
-        'name': name == null ? '' : name,
-        'uid': uid == null ? '' : uid,
-        'email': email == null ? '' : email,
-        'dp': dp,
-        'favorite_sport': '',
-        'favorite_team': '',
-        'position': '',
-        'experience': '',
-        'rating': '',
+        'name': Globals.creationName == null ? '' : Globals.creationName,
+        'uid': Globals.creationUid == null ? '' : Globals.creationUid,
+        'email': Globals.creationEmail == null ? '' : Globals.creationEmail,
+        'dp': Globals.creationDp == null ? '' : Globals.creationDp,
+        'favorite_sport': Globals.selectedSport == null ? '' : Globals.selectedSport,
+        'favorite_team': Globals.creationTeam == null ? '' : Globals.creationTeam,
+        'position': Globals.creationPosition == null ? '' : Globals.creationPosition,
+        'gender': Globals.creationGender == null ? '' : Globals.creationGender,
       });
-      print('part3');
     } catch (e) {
       print(e.message);
     }

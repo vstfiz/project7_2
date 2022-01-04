@@ -14,6 +14,7 @@ import 'package:project7_2/database/firebase.dart';
 import 'package:project7_2/services/auth/auth.dart';
 import 'package:project7_2/view/find_places/find_places.dart';
 import 'package:project7_2/view/home_screen/home_screen.dart';
+import 'package:project7_2/view/new_ui/onboarding/fill.dart';
 import 'package:project7_2/view/new_ui/onboarding/login.dart';
 import 'package:project7_2/view/new_ui/onboarding/signup.dart' as s;
 
@@ -52,9 +53,11 @@ class _LoginSocialState extends State<LoginSocial> {
                           uc.uid, context);
                       print(res);
                       if (res) {
-                        print('con1 ');
-                        await FirebaseDB.createUser(uc.uid, uc.email,
-                            uc.displayName, context);
+                        Navigator.of(context).pushReplacement(PageTransition(
+                            type: PageTransitionType.rightToLeft,
+                            child: Data(),
+                            duration: new Duration(milliseconds: 300),
+                            curve: Curves.easeInOut));
                         // Navigator.pop(context);
                         Navigator.of(context).pushReplacement( PageTransition(
                             type: PageTransitionType.rightToLeft,
@@ -71,8 +74,23 @@ class _LoginSocialState extends State<LoginSocial> {
                             curve: Curves.easeInOut));
                       }
                     },
-                    child: Text('Login With Google',style: GoogleFonts.montserrat(fontSize: 20,fontWeight: FontWeight.w400, letterSpacing: 2.89, color: Colors.white),),
-                  ),
+                    child:  Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: Globals.width *0.07,
+                          height: Globals.getHeight(40),
+                          child:Text('G',style: GoogleFonts.montserrat(fontSize: Globals.getFontSize(40),fontWeight: FontWeight.w600,color: Colors.white),)
+                        ),
+                        SizedBox(
+                          width: Globals.width*0.08,
+                        ),
+                        Container(
+                          width: Globals.width * 0.55,
+                          child: AutoSizeText('Login With Google'.toUpperCase(),maxLines: 1,style: GoogleFonts.montserrat(fontSize: Globals.getFontSize(20),fontWeight: FontWeight.w400, letterSpacing: 2.89, color: Colors.white),),
+                        ),
+                      ],
+                    )),
                   decoration: BoxDecoration(
                       color: Colors.redAccent,
                       borderRadius: BorderRadius.circular(Globals.getWidth(10))
@@ -85,8 +103,26 @@ class _LoginSocialState extends State<LoginSocial> {
                   height: Globals.getHeight(58),
                   width: Globals.width * 0.9,
                   child: TextButton(
-                    child: Text('Login With Apple',style: GoogleFonts.montserrat(fontSize: 20,fontWeight: FontWeight.w400, letterSpacing: 2.89, color: Colors.white),),
-                  ),
+                    child:  Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: Globals.width *0.07,
+                          height: Globals.getHeight(40),
+                          child:Image.asset(
+                            'assets/images/onboarding/apple.png',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        SizedBox(
+                          width: Globals.width*0.08,
+                        ),
+                        Container(
+                          width: Globals.width * 0.55,
+                          child: AutoSizeText('Login With Apple'.toUpperCase(),maxLines: 1,style: GoogleFonts.montserrat(fontSize: Globals.getFontSize(20),fontWeight: FontWeight.w400, letterSpacing: 2.89, color: Colors.white),),
+                        ),
+                      ],
+                    ) ),
                   decoration: BoxDecoration(
                       color: Color(0xFF121217),
                       borderRadius: BorderRadius.circular(Globals.getWidth(10))
@@ -99,8 +135,28 @@ class _LoginSocialState extends State<LoginSocial> {
                   height: Globals.getHeight(58),
                   width: Globals.width * 0.9,
                   child: TextButton(
-                    child: Text('Login With Twitter',style: GoogleFonts.montserrat(fontSize: 20,fontWeight: FontWeight.w400, letterSpacing: 2.89, color: Colors.white),),
-                  ),
+                    child:
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: Globals.width *0.07,
+                          height: Globals.getHeight(30),
+                          child:Image.asset(
+                            'assets/images/onboarding/twitter.png',
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                        SizedBox(
+                          width: Globals.width*0.08,
+                        ),
+                        Container(
+                          width: Globals.width * 0.55,
+                          child: AutoSizeText('Login With Twitter'.toUpperCase(),maxLines: 1,style: GoogleFonts.montserrat(fontSize: Globals.getFontSize(20),fontWeight: FontWeight.w400, letterSpacing: 2.89, color: Colors.white),),
+                        ),
+                      ],
+                    )),
                   decoration: BoxDecoration(
                       color: Color(0xFF5FC9E9),
                       borderRadius: BorderRadius.circular(Globals.getWidth(10))
@@ -120,7 +176,7 @@ class _LoginSocialState extends State<LoginSocial> {
                           duration: new Duration(milliseconds: 300),
                           curve: Curves.easeInOut));
                     },
-                    child: Text('SIGN UP',style: GoogleFonts.montserrat(fontSize: 20,fontWeight: FontWeight.w400, letterSpacing: 2.89, color: Colors.white),),
+                    child: AutoSizeText('SIGN UP',maxLines: 1,style: GoogleFonts.montserrat(fontSize: Globals.getFontSize(20),fontWeight: FontWeight.w400, letterSpacing: 2.89, color: Colors.white),),
                   ),
                   decoration: BoxDecoration(
                       color: Colors.black,
@@ -142,9 +198,9 @@ class _LoginSocialState extends State<LoginSocial> {
                 left: Globals.getWidth(190),
                 child: Container(
                     width: Globals.getWidth(44),
-                    child:Text('OR',style: GoogleFonts.montserrat(
+                    child:AutoSizeText('OR',maxLines: 1,style: GoogleFonts.montserrat(
                         color: Colors.white,
-                        fontSize: 12,
+                        fontSize: Globals.getFontSize(12),
                         letterSpacing: 1.73,fontWeight: FontWeight.w400
                     ),)
                 )),
@@ -169,8 +225,8 @@ class _LoginSocialState extends State<LoginSocial> {
                         duration: new Duration(milliseconds: 300),
                         curve: Curves.easeInOut));
                   },
-                  child: Text('Already have an account? Sign in',
-                      style: TextStyle(color: Colors.white, fontSize: 14.6,letterSpacing: 1.238)),
+                  child: AutoSizeText('Already have an account? Sign in',maxLines: 1,
+                      style: TextStyle(color: Colors.white, fontSize: Globals.getFontSize(14.6),letterSpacing: 1.238)),
                 )
             ),
             Positioned(

@@ -1,6 +1,18 @@
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:project7_2/custom/globals.dart';
+import 'package:project7_2/database/firebase.dart';
+import 'package:project7_2/view/new_ui/left_side_navigation/left_panel.dart';
+import 'package:project7_2/view/new_ui/onboarding/fill.dart';
+import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
+import 'package:project7_2/view/user_profile/user_profile.dart';
 
 class HomeScreen extends StatefulWidget{
   @override
@@ -9,109 +21,221 @@ class HomeScreen extends StatefulWidget{
 
 class _HomeScreenState extends State<HomeScreen>{
 
-  List<BottomNavigationBarItem> tabs = [
-    new BottomNavigationBarItem(
-        icon: Icon(Icons.rss_feed,size:30),
-        label: 'News & \nFixtures'),
-    new BottomNavigationBarItem(
-        icon: Icon(Icons.location_on_rounded,size:30),
-        label: 'Find Game'),
-    new BottomNavigationBarItem(
-        icon: new Image.asset('assets/images/locker_room.png',height: 30,width: 30,),
-        label: 'Locker \nRoom')
-  ];
+  @override
+  void initState() {
+    super.initState();
+  }
 
-
+  GlobalKey<SliderMenuContainerState> _key = new GlobalKey<SliderMenuContainerState>();
   @override
   Widget build(BuildContext context) {
     return SafeArea(child: Scaffold(
       backgroundColor: Colors.black,
-      bottomNavigationBar: ClipRRect(
-        child: BottomNavigationBar(
-          backgroundColor: Globals.currentTab==2?Color(0xFF1F1F23):Colors.black,
-          selectedItemColor: Color(0xFF7585FF),
-          unselectedItemColor: Colors.grey,
-          selectedIconTheme: IconThemeData(
-            color: Color(0xFF7585FF),
-          ),
-          unselectedIconTheme: IconThemeData(
-            color: Colors.grey,
-          ),
-          items: tabs,
-          elevation: 20,
-          currentIndex: Globals.currentTab,
-          onTap: (index) {
-            print(index);
-            setState(() {
-              Globals.currentTab = index;
-              Globals.pageController.jumpToPage(index);
-            });
-            // if (index == 0) {
-            //   setState(() {
-            //     Globals.currentTab = 0;
-            //   });
-            //
-            // } else if (index == 1) {
-            //   if (Globals.user != null) {
-            //     setState(() {
-            //       Globals.currentTab = 1;
-            //     });
-            //
-            //   } else {
-            //     Navigator.push(context, MaterialPageRoute(builder: (_) {
-            //       return SignIn();
-            //     }));
-            //   }
-            // } else if (index == 2) {
-            //   print(Globals.feedType);
-            //   if(Globals.currentTab == 2){
-            //     setState(() {
-            //       Globals.feedType = !Globals.feedType;
-            //     });
-            //     Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context){return HomeScreen();}));
-            //   }
-            //   else{
-            //     setState(() {
-            //       Globals.currentTab = 2;
-            //     });
-            //   }
-            //
-            // } else if (index == 3) {
-            //   String shareMessage;
-            //   if(Globals.feedType){
-            //     shareMessage = Globals.currentFeed.claim.length > 250
-            //         ? Globals.currentFeed.claim.substring(0, 250) +
-            //         "...\n\nTo read more, download: \n\n https://play.google.com/store/apps/details?id=com.codingdevs.facto_user"
-            //         : Globals.currentFeed.claim +
-            //         "\n\nTo read more, download: \n\n https://play.google.com/store/apps/details?id=com.codingdevs.facto_user";
-            //   }
-            //   else{
-            //     shareMessage = Globals.currentFeed.claim.length > 250
-            //         ? Globals.currentFeed.claim.substring(0, 250) +
-            //         "...\n\nTo read more, download: \n\n https://play.google.com/store/apps/details?id=com.codingdevs.facto_user"
-            //         : Globals.currentFeed.claim +
-            //         "\n\nTo read more, download: \n\n https://play.google.com/store/apps/details?id=com.codingdevs.facto_user";
-            //
-            //   }
-            //   Share.share(shareMessage);
-            // }
-          },
-          type: BottomNavigationBarType.fixed,
-        ),
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(10),
-          topRight: Radius.circular(10),
-        ),
-      ),
-      body: PageView.builder(
-        controller: Globals.pageController,
-        itemCount: Globals.screens.length,
-        physics: NeverScrollableScrollPhysics(),
-        itemBuilder: (context, index) {
-          return Globals.screens[index];
+      bottomNavigationBar: FancyBottomNavigation(
+        tabs: [
+          TabData(icon: Icon(Icons.rss_feed,color: Colors.white,), title: "News & Fixtures"),
+          TabData(icon: Icon(Icons.location_on_outlined,color: Colors.white,), title: "Find Game"),
+          TabData(icon: Icon(Icons.door_back_door_outlined,color: Colors.white,),title: "Locker Room")
+        ],
+        barBackgroundColor: Colors.black,
+        activeIconColor: Colors.white,
+        textColor: Colors.white,
+        circleColor: Colors.blue,
+        onTabChangedListener: (position) {
+          setState(() {
+            Globals.currentTab = position;
+            Globals.pageController.jumpToPage(position);
+          });
         },
       ),
+      // Container(
+      //   height: Globals.width * .2,
+      //   decoration: BoxDecoration(
+      //     color: Colors.black,
+      //     boxShadow: [
+      //       BoxShadow(
+      //         color: Colors.black.withOpacity(.1),
+      //         blurRadius: 30,
+      //         offset: Offset(0, 10),
+      //       ),
+      //     ],
+      //   ),
+      //   child: ListView.builder(
+      //     itemCount: 3,
+      //     scrollDirection: Axis.horizontal,
+      //     padding: EdgeInsets.symmetric(horizontal: Globals.width * .02),
+      //     itemBuilder: (context, index) => InkWell(
+      //       onTap: () {
+      //         setState(() {
+      //           Globals.currentTab = index;
+      //           HapticFeedback.lightImpact();
+      //         });
+      //       },
+      //       splashColor: Colors.transparent,
+      //       highlightColor: Colors.transparent,
+      //       child: Column(
+      //         children: [
+      //           AnimatedContainer(
+      //             duration: Duration(seconds: 1),
+      //             curve: Curves.fastLinearToSlowEaseIn,
+      //             height: index == Globals.currentTab ? Globals.width * .15 : 0,
+      //             width: index == Globals.currentTab ? Globals.width * .15: 0,
+      //             decoration: BoxDecoration(
+      //               shape: BoxShape.circle,
+      //               color: index == Globals.currentTab
+      //                   ? Color(0xFF4048EF)
+      //                   : Colors.transparent,
+      //             ),
+      //             child: Center(
+      //               child: Column(
+      //                 mainAxisAlignment: MainAxisAlignment.center,
+      //                 children: [
+      //                   AnimatedContainer(
+      //                     duration: Duration(seconds: 1),
+      //                     curve: Curves.fastLinearToSlowEaseIn,
+      //                     width:
+      //                     index == Globals.currentTab ? Globals.width * .03 : 20,
+      //                   ),
+      //                   Icon(
+      //                     listOfIcons[index],
+      //                     size: Globals.width * .076,
+      //                     color: index == Globals.currentTab
+      //                         ? Colors.white
+      //                         : Colors.white,
+      //                   ),
+      //                 ],
+      //               ),
+      //             ),
+      //           ),
+      //           AnimatedOpacity(
+      //             opacity: index == Globals.currentTab ? 1 : 0,
+      //             duration: Duration(seconds: 1),
+      //             curve: Curves.fastLinearToSlowEaseIn,
+      //             child: Text(
+      //               index == Globals.currentTab
+      //                   ? '${listOfStrings[index]}'
+      //                   : '',
+      //               style: GoogleFonts.montserrat(
+      //                 color: Colors.white,
+      //                 fontWeight: FontWeight.w600,
+      //                 fontSize: 15,
+      //               ),
+      //             ),
+      //           ),
+      //         ],
+      //       ),
+      //     ),
+      //   ),
+      // ),
+      body:  _homeScreen()
     ),top: true,);
   }
 
+
+
+  List<String> listOfStrings = [
+    'News & Fixtures',
+    'Find Game',
+    'Locker Room',
+  ];
+
+  Widget _appBar(){
+    return Row(
+      children: [
+        Positioned(
+          child: IconButton(
+            onPressed: () {
+
+            },
+            icon: Icon(
+              Icons.menu,
+              color: Colors.white,
+              size: 28,
+            ),
+          ),
+        ),
+        Container(
+          width: Globals.width * 0.07,
+          height: Globals.width * 0.07,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.grey[800].withOpacity(0.7),
+          ),
+          child: Icon(
+            Icons.calendar_today_outlined,
+            color: Colors.white,
+            size: 16,
+          ),
+        ),
+        SizedBox(
+          width: 10,
+        ),
+        Container(
+          width: Globals.width * 0.07,
+          height: Globals.width * 0.07,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.grey[800].withOpacity(0.7),
+          ),
+          child: TextButton(
+            child: Icon(
+              Icons.add,
+              color: Colors.white,
+              size: 18,
+            ),
+            onPressed: () async {
+              // _loadingDialog('Creating Locker Room');
+              var ref = FirebaseFirestore.instance;
+              await ref.collection('lockerRooms').add({
+                'createdByUid': Globals.uid,
+                'ownerName': Globals.name,
+                'sports': 'Football',
+                'location': 'NH2 Delhi Kanpur Highway',
+              });
+              await Globals.lockerRooms.add(1);
+              Timer t = new Timer(new Duration(seconds: 3), () {
+                Navigator.pop(context);
+                setState(() {
+                  Globals.currentTab = 2;
+                  Globals.pageController.jumpToPage(2);
+                });
+              });
+            },
+          ),
+        ),
+        SizedBox(
+          width: 10,
+        ),
+        Container(
+          width: Globals.width * 0.07,
+          height: Globals.width * 0.07,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.grey[800].withOpacity(0.7),
+          ),
+          child: TextButton(
+            onPressed: () {
+              Navigator.of(context).push(PageTransition(
+                  type: PageTransitionType.rightToLeft,
+                  child: ProfilePage(),
+                  duration: new Duration(milliseconds: 300),
+                  curve: Curves.easeInOut));
+            },
+            child: Icon(Icons.person,color: Colors.white,size: 18,),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _homeScreen(){
+    return PageView.builder(
+      controller: Globals.pageController,
+      itemCount: Globals.screens.length,
+      physics: NeverScrollableScrollPhysics(),
+      itemBuilder: (context, index) {
+        return Globals.screens[index];
+      },
+    );
+  }
 }

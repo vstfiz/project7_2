@@ -3,7 +3,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:project7_2/custom/globals.dart';
 import 'package:project7_2/services/auth/auth.dart';
+import 'package:project7_2/view/home_screen/home_screen.dart';
+import 'package:project7_2/view/new_ui/left_side_navigation/teams.dart';
+import 'package:project7_2/view/new_ui/left_side_navigation/venue_bookings.dart';
+import 'package:project7_2/view/new_ui/left_side_navigation/vgdf.dart';
 import 'package:project7_2/view/new_ui/onboarding/splash.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,32 +27,25 @@ class MyApp extends StatelessWidget {
         print(Globals.height);
         print(Globals.width);
         return MaterialApp(
-            title: 'Pitch Stories',
+            title: 'OnField',
             theme: ThemeData(
               primarySwatch: Colors.lightBlue,
             ),
-            home: StreamBuilder(
-              stream: auth.authStateChanges(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  fAuth.User u = snapshot.data;
-                  Globals.uid = u.uid;
-                  Globals.name = u.displayName;
-                  print(u.uid);
-                  Globals.hasLogin = true;
-                  // if (u.emailVerified) {
-                  //   return Splash();
-                  // } else {
-                  //   if (u.isAnonymous) {
-                  //     return Splash();
-                  //   } else {
-                  //     return Splash();
-                  //   }
-                  // }
-                }
-                return Splash();
-              },
-            ));
+            home: MyApp1()
+            // StreamBuilder(
+            //   stream: auth.authStateChanges(),
+            //   builder: (context, snapshot) {
+            //     if (snapshot.hasData) {
+            //       fAuth.User u = snapshot.data;
+            //       Globals.uid = u.uid;
+            //       Globals.name = u.displayName;
+            //       print(u.uid);
+            //       Globals.hasLogin = true;
+            //     }
+            //     return Splash();
+            //   },
+            // )
+            );
       });
     });
   }
