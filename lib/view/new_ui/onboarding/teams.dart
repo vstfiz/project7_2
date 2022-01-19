@@ -1,8 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
@@ -11,8 +13,7 @@ import 'package:project7_2/view/new_ui/onboarding/fill.dart';
 import 'package:project7_2/view/new_ui/onboarding/login.dart';
 import 'package:project7_2/view/new_ui/onboarding/pick_intrests.dart';
 import 'package:project7_2/view/new_ui/onboarding/position.dart';
-
-import 'lockerroom_welcome.dart';
+import 'dart:math' as math;
 
 class SelectFavTeam extends StatefulWidget {
   _SelectFavTeamState createState() => _SelectFavTeamState();
@@ -20,6 +21,16 @@ class SelectFavTeam extends StatefulWidget {
 
 class _SelectFavTeamState extends State<SelectFavTeam> {
   int selIndex;
+  final ScrollController _controller = ScrollController();
+
+  void _handleKeyEvent() {
+    var offset = _controller.offset;
+    setState(() {
+      _controller.animateTo(offset + 100,
+          duration: Duration(milliseconds: 30), curve: Curves.ease);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +48,9 @@ class _SelectFavTeamState extends State<SelectFavTeam> {
                     minFontSize: 26,
                     maxFontSize: 30,
                     style: GoogleFonts.montserrat(
-                        color: Colors.white, fontSize: 26,fontWeight: FontWeight.w600),
+                        color: Colors.white,
+                        fontSize: Globals.getFontSize(26),
+                        fontWeight: FontWeight.w600),
                   ),
                 )),
             Positioned(
@@ -46,31 +59,50 @@ class _SelectFavTeamState extends State<SelectFavTeam> {
                 right: Globals.width * 0.22,
                 child: Container(
                   width: Globals.width,
-                  height: Globals.getHeight((899-470).toDouble()),
+                  height: Globals.getHeight((899 - 470).toDouble()),
                   child: ListView(
-                    children: List.generate(Globals.teams[Globals.selectedSport].length, (index) {
+                    controller: _controller,
+                    children: List.generate(
+                        Globals.teams[Globals.selectedSport].length, (index) {
                       return Container(
                         height: Globals.getHeight(58),
                         width: Globals.width * 0.56,
-                        margin: index == 0?EdgeInsets.only(top:Globals.getWidth(15),bottom: Globals.getWidth(28)):EdgeInsets.only(bottom:Globals.getWidth(43)),
+                        margin: index == 0
+                            ? EdgeInsets.only(
+                                top: Globals.getWidth(15),
+                                bottom: Globals.getWidth(28))
+                            : EdgeInsets.only(bottom: Globals.getWidth(43)),
                         child: TextButton(
-                          onPressed: (){
+                          onPressed: () {
                             setState(() {
                               selIndex = index;
-                              Globals.creationTeam = Globals.teams[Globals.selectedSport][index];
+                              Globals.creationTeam =
+                                  Globals.teams[Globals.selectedSport][index];
                             });
-                            Navigator.of(context).pushReplacement(PageTransition(
-                                type: PageTransitionType.rightToLeft,
-                                child: PickInterests(),
-                                duration: new Duration(milliseconds: 300),
-                                curve: Curves.easeInOut));
+                            Navigator.of(context).pushReplacement(
+                                PageTransition(
+                                    type: PageTransitionType.rightToLeft,
+                                    child: PickInterests(),
+                                    duration: new Duration(milliseconds: 300),
+                                    curve: Curves.easeInOut));
                           },
-                          child: Text(Globals.teams[Globals.selectedSport][index].toUpperCase(),textAlign:TextAlign.center,style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.w400, letterSpacing: 2.89, color: Colors.white),),
+                          child: Text(
+                            Globals.teams[Globals.selectedSport][index]
+                                .toUpperCase(),
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.montserrat(
+                                fontSize: Globals.getFontSize(17),
+                                fontWeight: FontWeight.w400,
+                                letterSpacing: 2.89,
+                                color: Colors.white),
+                          ),
                         ),
                         decoration: BoxDecoration(
-                            color: selIndex == index?Color(0xFF7585FF):Colors.black,
-                            borderRadius: BorderRadius.circular(Globals.getWidth(48))
-                        ),
+                            color: selIndex == index
+                                ? Color(0xFF7585FF)
+                                : Colors.black,
+                            borderRadius:
+                                BorderRadius.circular(Globals.getWidth(48))),
                       );
                     }),
                   ),
@@ -126,9 +158,9 @@ class _SelectFavTeamState extends State<SelectFavTeam> {
                   height: Globals.getHeight(268),
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage('assets/images/onboarding/layer.png'),fit: BoxFit.contain
-                      )
-                  ),
+                          image:
+                              AssetImage('assets/images/onboarding/layer.png'),
+                          fit: BoxFit.contain)),
                 )),
             Positioned(
                 top: Globals.getHeight(125),
@@ -138,9 +170,9 @@ class _SelectFavTeamState extends State<SelectFavTeam> {
                   height: Globals.getHeight(235),
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage('assets/images/onboarding/layer_2.png'),fit: BoxFit.scaleDown
-                      )
-                  ),
+                          image: AssetImage(
+                              'assets/images/onboarding/layer_2.png'),
+                          fit: BoxFit.scaleDown)),
                 )),
             Positioned(
                 top: Globals.getHeight(141),
@@ -150,9 +182,9 @@ class _SelectFavTeamState extends State<SelectFavTeam> {
                   height: Globals.getHeight(200),
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage('assets/images/onboarding/layer_3.png'),fit: BoxFit.scaleDown
-                      )
-                  ),
+                          image: AssetImage(
+                              'assets/images/onboarding/layer_3.png'),
+                          fit: BoxFit.scaleDown)),
                 )),
             Positioned(
                 top: Globals.getHeight(169),
@@ -162,10 +194,25 @@ class _SelectFavTeamState extends State<SelectFavTeam> {
                   height: Globals.getHeight(137),
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage('assets/images/onboarding/person_team.png'),fit: BoxFit.scaleDown
-                      )
-                  ),
+                          image: AssetImage(
+                              'assets/images/onboarding/person_team.png'),
+                          fit: BoxFit.scaleDown)),
                 )),
+            Positioned(
+                bottom: Globals.getHeight(15),
+                right: Globals.getWidth(5),
+                child: Container(
+                    child: Transform.rotate(
+                  angle: math.pi / 2,
+                  child: TextButton(
+                    onPressed: _handleKeyEvent,
+                    child: Icon(
+                      Icons.arrow_forward,
+                      color: Colors.white,
+                      size: Globals.getWidth(20),
+                    ),
+                  ),
+                ))),
           ],
         ),
         decoration: BoxDecoration(

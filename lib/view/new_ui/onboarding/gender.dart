@@ -7,11 +7,8 @@ import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:project7_2/custom/globals.dart';
-import 'package:project7_2/view/new_ui/onboarding/fill.dart';
-import 'package:project7_2/view/new_ui/onboarding/login.dart';
 import 'package:project7_2/view/new_ui/onboarding/sport.dart';
 
-import 'lockerroom_welcome.dart';
 
 class SelectGender extends StatefulWidget {
   _SelectGenderState createState() => _SelectGenderState();
@@ -38,7 +35,7 @@ class _SelectGenderState extends State<SelectGender> {
                     minFontSize: 26,
                     maxFontSize: 30,
                     style: GoogleFonts.montserrat(
-                        color: Colors.white, fontSize: 26,fontWeight: FontWeight.w600),
+                        color: Colors.white, fontSize: Globals.getWidth(26),fontWeight: FontWeight.w600),
                   ),
                 )),
             Positioned(
@@ -59,7 +56,7 @@ class _SelectGenderState extends State<SelectGender> {
                           duration: new Duration(milliseconds: 300),
                           curve: Curves.easeInOut));
                     },
-                    child: Text('Male'.toUpperCase(),style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.w400, letterSpacing: 2.89, color: Colors.white),),
+                    child: Text('Male'.toUpperCase(),style: GoogleFonts.montserrat(fontSize: Globals.getWidth(17),fontWeight: FontWeight.w400, letterSpacing: 2.89, color: Colors.white),),
                   ),
                   decoration: BoxDecoration(
                       color: selMale?Color(0xFF7585FF):Colors.black,
@@ -84,7 +81,7 @@ class _SelectGenderState extends State<SelectGender> {
                           duration: new Duration(milliseconds: 300),
                           curve: Curves.easeInOut));
                     },
-                    child: Text('female'.toUpperCase(),style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.w400, letterSpacing: 2.89, color: Colors.white),),
+                    child: Text('female'.toUpperCase(),style: GoogleFonts.montserrat(fontSize: Globals.getWidth(17),fontWeight: FontWeight.w400, letterSpacing: 2.89, color: Colors.white),),
                   ),
                   decoration: BoxDecoration(
                       color: selFemale?Color(0xFF7585FF):Colors.black,
@@ -109,7 +106,7 @@ class _SelectGenderState extends State<SelectGender> {
                           duration: new Duration(milliseconds: 300),
                           curve: Curves.easeInOut));
                     },
-                    child: Text('other'.toUpperCase(),style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.w400, letterSpacing: 2.89, color: Colors.white),),
+                    child: Text('other'.toUpperCase(),style: GoogleFonts.montserrat(fontSize: Globals.getWidth(17),fontWeight: FontWeight.w400, letterSpacing: 2.89, color: Colors.white),),
                   ),
                   decoration: BoxDecoration(
                       color: selOther?Color(0xFF7585FF):Colors.black,

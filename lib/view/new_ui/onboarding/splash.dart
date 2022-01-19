@@ -6,8 +6,8 @@ import 'package:project7_2/custom/globals.dart';
 import 'package:project7_2/database/firebase.dart';
 import 'package:project7_2/view/home_screen/home_screen.dart';
 import 'package:project7_2/view/new_ui/onboarding/gender.dart';
-import 'package:project7_2/view/new_ui/onboarding/location.dart' as l;
-
+import 'package:project7_2/view/new_ui/onboarding/welcome_screen.dart';
+import 'loginSocial.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -29,50 +29,53 @@ class _SplashScreenState extends State<SplashScreen>
     _finishAnimation();
   }
 
-  _finishAnimation(){
-
+  _finishAnimation() {
     scaleController = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 600),
     )..addStatusListener(
-          (status) {
-        if (status == AnimationStatus.completed) {
-          if(Globals.hasLogin){
-            if(hasData){
-              Navigator.of(context).pushReplacement(
-                ThisIsFadeRoute(
-                  route: HomeScreen(),
-                ),
-              );
+        (status) {
+          if (status == AnimationStatus.completed) {
+            if (Globals.hasLogin) {
+              if (hasData) {
+                Navigator.of(context).pushReplacement(
+                  ThisIsFadeRoute(
+                    route: HomeScreen(),
+                  ),
+                );
+              } else {
+                Navigator.of(context).pushReplacement(
+                  ThisIsFadeRoute(
+                    route: SelectGender(),
+                  ),
+                );
+              }
+            } else {
+              if (Globals.isFirstRun) {
+                Navigator.of(context).pushReplacement(
+                  ThisIsFadeRoute(
+                    route: WelcomeScreen(),
+                  ),
+                );
+              } else {
+                Navigator.of(context).pushReplacement(
+                  ThisIsFadeRoute(
+                    route: LoginSocial(),
+                  ),
+                );
+              }
             }
-            else{
-              Navigator.of(context).pushReplacement(
-                ThisIsFadeRoute(
-                  route: SelectGender(),
-                ),
-              );
-            }
-          }
-          else{
-            Navigator.of(context).pushReplacement(
-              ThisIsFadeRoute(
-                route: HomeScreen(),
-              ),
+            Timer(
+              Duration(milliseconds: 300),
+              () {
+                scaleController.reset();
+              },
             );
           }
-          Timer(
-            Duration(milliseconds: 300),
-                () {
-              scaleController.reset();
-            },
-          );
-        }
-      },
-    );
-
+        },
+      );
     scaleAnimation =
         Tween<double>(begin: 0.0, end: 12).animate(scaleController);
-
     Timer(Duration(milliseconds: 600), () {
       setState(() {
         _opacity = 1.0;
@@ -94,17 +97,16 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   bool hasData;
-  _getUser()async{
+
+  _getUser() async {
     hasData = await FirebaseDB.getUserDetails(Globals.uid, context);
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body:
-      Center(
+      body: Center(
         child: AnimatedOpacity(
           curve: Curves.fastLinearToSlowEaseIn,
           duration: Duration(seconds: 6),
@@ -117,10 +119,8 @@ class _SplashScreenState extends State<SplashScreen>
             decoration: BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage('assets/images/onboarding/logo.png'),
-                    fit: BoxFit.contain)
-            ),
+                    fit: BoxFit.contain)),
             child: Center(
-
               child: AnimatedBuilder(
                 animation: scaleAnimation,
                 builder: (c, child) => Transform.scale(
@@ -129,9 +129,9 @@ class _SplashScreenState extends State<SplashScreen>
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         image: DecorationImage(
-                            image: AssetImage('assets/images/onboarding/logo.png'),
-                            fit: BoxFit.contain)
-                    ),
+                            image:
+                                AssetImage('assets/images/onboarding/logo.png'),
+                            fit: BoxFit.contain)),
                   ),
                 ),
               ),
@@ -149,27 +149,21 @@ class ThisIsFadeRoute extends PageRouteBuilder {
 
   ThisIsFadeRoute({this.page, this.route})
       : super(
-    pageBuilder: (
-        BuildContext context,
-        Animation<double> animation,
-        Animation<double> secondaryAnimation,
-        ) =>
-    page,
-    transitionsBuilder: (
-        BuildContext context,
-        Animation<double> animation,
-        Animation<double> secondaryAnimation,
-        Widget child,
-        ) =>
-        FadeTransition(
-          opacity: animation,
-          child: route,
-        ),
-  );
+          pageBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+          ) =>
+              page,
+          transitionsBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+            Widget child,
+          ) =>
+              FadeTransition(
+            opacity: animation,
+            child: route,
+          ),
+        );
 }
-
-
-
-
-
-

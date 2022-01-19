@@ -19,7 +19,7 @@ import 'package:project7_2/view/new_ui/onboarding/login.dart';
 import 'package:project7_2/view/new_ui/onboarding/teams.dart';
 import 'package:toast/toast.dart';
 
-import 'lockerroom_welcome.dart';
+
 
 class PickInterests extends StatefulWidget {
   _PickInterestsState createState() => _PickInterestsState();
@@ -45,7 +45,7 @@ class _PickInterestsState extends State<PickInterests> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Uploading data'.toUpperCase(),style: GoogleFonts.montserrat(fontWeight: FontWeight.w400,fontSize:20,letterSpacing: 1.6),),
+                        Text('Uploading data'.toUpperCase(),style: GoogleFonts.montserrat(fontWeight: FontWeight.w400,fontSize:Globals.getFontSize(20),letterSpacing: 1.6),),
 
                         Container(child:  LinearProgressIndicator(
                           backgroundColor: Colors.grey,
@@ -136,7 +136,7 @@ class _PickInterestsState extends State<PickInterests> {
                         Toast.show(e.toString(), context);
                       }
                     },
-                    child: Text('Skip',style: GoogleFonts.montserrat(fontSize: 14,fontWeight: FontWeight.w400, color: Colors.white),),
+                    child: Text('Skip',style: GoogleFonts.montserrat(fontSize: Globals.getFontSize(14),fontWeight: FontWeight.w400, color: Colors.white),),
                   ),
                 ),
             Positioned(
@@ -149,7 +149,7 @@ class _PickInterestsState extends State<PickInterests> {
                     maxFontSize: 30,
                     style: GoogleFonts.montserrat(
                         color: Colors.white,
-                        fontSize: 26,
+                        fontSize: Globals.getFontSize(26),
                         fontWeight: FontWeight.w600),
                   ),
                 )),
@@ -161,7 +161,7 @@ class _PickInterestsState extends State<PickInterests> {
                     '${selectedCount} Interests Selected',
                     style: GoogleFonts.montserrat(
                         color: Color(0xFF585858),
-                        fontSize: 14,
+                        fontSize: Globals.getFontSize(14),
                         fontWeight: FontWeight.w400),
                   ),
                 )),
@@ -203,7 +203,7 @@ class _PickInterestsState extends State<PickInterests> {
                             Text(
                               interests[index].name,
                               style: GoogleFonts.montserrat(
-                                  fontSize: 14.0,
+                                  fontSize: Globals.getFontSize(14),
                                   color: Colors.white,
                                   fontWeight: FontWeight.w400),
                             ),
@@ -256,7 +256,7 @@ class _PickInterestsState extends State<PickInterests> {
                         Toast.show(e.toString(), context);
                       }
                     },
-                    child: Text('Next'.toUpperCase(),style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.w400, letterSpacing: 2.89, color: Colors.white),),
+                    child: Text('Next'.toUpperCase(),style: GoogleFonts.montserrat(fontSize: Globals.getFontSize(17),fontWeight: FontWeight.w400, letterSpacing: 2.89, color: Colors.white),),
                   ),
                   decoration: BoxDecoration(
                       color: Colors.black,

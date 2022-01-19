@@ -37,7 +37,7 @@ class _ValidatePasswordState extends State<ValidatePassword> {
                   child: Text(
                     'change password'.toUpperCase(),
                     style: GoogleFonts.montserrat(
-                        fontSize: 16,
+                        fontSize: Globals.getFontSize(16),
                         fontWeight: FontWeight.w400,
                         color: Colors.white,
                         letterSpacing: 1.59),
@@ -55,7 +55,7 @@ class _ValidatePasswordState extends State<ValidatePassword> {
                     child: Icon(
                       Icons.clear,
                       color: Colors.white,
-                      size: 30,
+                      size: Globals.getFontSize(20),
                     )),
               ),
               top: Globals.getHeight(70),
@@ -99,13 +99,13 @@ class _ValidatePasswordState extends State<ValidatePassword> {
                         },
                         style: GoogleFonts.montserrat(
                             color: Colors.white,
-                            fontSize: 20,
+                            fontSize: Globals.getFontSize(20),
                             fontWeight: FontWeight.w400),
                         textAlignVertical: TextAlignVertical.center,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           suffix: Container(
-                            margin: EdgeInsets.only(right: 20.0,top: 40.0),
+                            margin: EdgeInsets.only(right: Globals.getWidth(20),top: Globals.getHeight(40)),
                             width: 30,
                             height: 30,
                             decoration: BoxDecoration(
@@ -120,7 +120,7 @@ class _ValidatePasswordState extends State<ValidatePassword> {
                           hintText: 'Password',
                           hintStyle: GoogleFonts.montserrat(
                               color: Colors.white.withOpacity(0.6),
-                              fontSize: 20,
+                              fontSize: Globals.getFontSize(20),
                               fontWeight: FontWeight.w400),
                         ),
                       ),
@@ -163,13 +163,13 @@ class _ValidatePasswordState extends State<ValidatePassword> {
                         },
                         style: GoogleFonts.montserrat(
                             color: Colors.white,
-                            fontSize: 20,
+                            fontSize: Globals.getFontSize(20),
                             fontWeight: FontWeight.w400),
                         textAlignVertical: TextAlignVertical.center,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           suffix: Container(
-                            margin: EdgeInsets.only(right: 20.0,top: 40.0),
+                            margin: EdgeInsets.only(right: Globals.getWidth(20),top: Globals.getHeight(40)),
                             width: 30,
                             height: 30,
                             decoration: BoxDecoration(
@@ -184,7 +184,7 @@ class _ValidatePasswordState extends State<ValidatePassword> {
                           hintText: 'Validate new Password',
                           hintStyle: GoogleFonts.montserrat(
                               color: Colors.white.withOpacity(0.6),
-                              fontSize: 20,
+                              fontSize: Globals.getFontSize(20),
                               fontWeight: FontWeight.w400),
                         ),
                       ),
@@ -201,7 +201,7 @@ class _ValidatePasswordState extends State<ValidatePassword> {
                     child: Text(
                       'UPDATE PASSWORD',
                       style: GoogleFonts.montserrat(
-                          fontSize: 20,
+                          fontSize: Globals.getFontSize(20),
                           fontWeight: FontWeight.w400,
                           letterSpacing: 2.89,
                           color: Colors.white),
@@ -219,7 +219,7 @@ class _ValidatePasswordState extends State<ValidatePassword> {
                     'Please enter a new password for\nyour account',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.montserrat(
-                        fontSize: 17,
+                        fontSize: Globals.getFontSize(20),
                         fontWeight: FontWeight.w400,
                         color: Colors.white,
                         letterSpacing: 0.17),

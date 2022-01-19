@@ -13,7 +13,6 @@ import 'package:project7_2/view/new_ui/onboarding/fill.dart';
 import 'package:project7_2/view/new_ui/onboarding/login.dart';
 import 'package:project7_2/view/new_ui/onboarding/teams.dart';
 
-import 'lockerroom_welcome.dart';
 
 class Invite extends StatefulWidget {
   _InviteState createState() => _InviteState();
@@ -42,7 +41,7 @@ class _InviteState extends State<Invite> {
                       duration: new Duration(milliseconds: 300),
                       curve: Curves.easeInOut));
                 },
-                child: Text('Skip',style: GoogleFonts.montserrat(fontSize: 14,fontWeight: FontWeight.w400, color: Colors.white),),
+                child: Text('Skip',style: GoogleFonts.montserrat(fontSize: Globals.getFontSize(14),fontWeight: FontWeight.w400, color: Colors.white),),
               ),
             ),
             Positioned(
@@ -54,7 +53,7 @@ class _InviteState extends State<Invite> {
                     maxFontSize: 30,
                     style: GoogleFonts.montserrat(
                         color: Colors.white,
-                        fontSize: 26,
+                        fontSize: Globals.getFontSize(26),
                         fontWeight: FontWeight.w600),
                   ),
                 )),
@@ -66,7 +65,7 @@ class _InviteState extends State<Invite> {
                     textAlign: TextAlign.center,
                     style: GoogleFonts.montserrat(
                         color: Colors.white,
-                        fontSize: 14,
+                        fontSize: Globals.getFontSize(14),
                         fontWeight: FontWeight.w300),
                   ),
                 )),
@@ -81,7 +80,7 @@ class _InviteState extends State<Invite> {
                         mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        width: Globals.width *0.07,
+                        width: Globals.width * 0.07,
                         height: Globals.getHeight(30),
                         child:Image.asset(
                           'assets/images/onboarding/facebook.png',
@@ -96,7 +95,7 @@ class _InviteState extends State<Invite> {
                         child: Text(
                           'Invite With Facebook'.toUpperCase(),
                           style: GoogleFonts.montserrat(
-                              fontSize: 14,
+                              fontSize: Globals.getFontSize(12),
                               fontWeight: FontWeight.w400,
                               letterSpacing: 2.89,
                               color: Colors.white),
@@ -135,7 +134,7 @@ class _InviteState extends State<Invite> {
                             child: Text(
                               'Invite With Twitter'.toUpperCase(),
                               style: GoogleFonts.montserrat(
-                                  fontSize: 14,
+                                  fontSize: Globals.getFontSize(12),
                                   fontWeight: FontWeight.w400,
                                   letterSpacing: 2.89,
                                   color: Colors.white),
@@ -162,7 +161,7 @@ class _InviteState extends State<Invite> {
                             width: Globals.width *0.07,
                             height: Globals.getHeight(30),
                             child:Image.asset(
-                              'assets/images/onboarding/facebfxcgvbook.png',
+                              'assets/images/onboarding/call.png',
                               fit: BoxFit.contain,
                             ),
                           ),
@@ -174,7 +173,7 @@ class _InviteState extends State<Invite> {
                             child: Text(
                               'Invite With Phonebook'.toUpperCase(),
                               style: GoogleFonts.montserrat(
-                                  fontSize: 14,
+                                  fontSize: Globals.getFontSize(12),
                                   fontWeight: FontWeight.w400,
                                   letterSpacing: 2.89,
                                   color: Colors.white),
@@ -199,9 +198,8 @@ class _InviteState extends State<Invite> {
                           child: AccountCreated(),
                           duration: new Duration(milliseconds: 300),
                           curve: Curves.easeInOut));
-
                     },
-                    child: Text('Later',style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.w400, letterSpacing: 2.89, color: Colors.white),),
+                    child: Text('Later',style: GoogleFonts.montserrat(fontSize: Globals.getFontSize(17),fontWeight: FontWeight.w400, letterSpacing: 2.89, color: Colors.white),),
                   ),
                   decoration: BoxDecoration(
                       color: Colors.black,

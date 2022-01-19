@@ -10,14 +10,23 @@ import 'package:project7_2/custom/globals.dart';
 import 'package:project7_2/view/new_ui/onboarding/fill.dart';
 import 'package:project7_2/view/new_ui/onboarding/login.dart';
 import 'package:project7_2/view/new_ui/onboarding/teams.dart';
+import 'dart:math' as math;
 
-import 'lockerroom_welcome.dart';
 
 class SelectPosition extends StatefulWidget {
   _SelectPositionState createState() => _SelectPositionState();
 }
 
 class _SelectPositionState extends State<SelectPosition> {
+  final ScrollController _controller = ScrollController();
+
+  void _handleKeyEvent() {
+    var offset = _controller.offset;
+    setState(() {
+      _controller.animateTo(offset + 100,
+          duration: Duration(milliseconds: 30), curve: Curves.ease);
+    });
+  }
   int selIndex;
   @override
   Widget build(BuildContext context) {
@@ -36,7 +45,7 @@ class _SelectPositionState extends State<SelectPosition> {
                     minFontSize: 26,
                     maxFontSize: 30,
                     style: GoogleFonts.montserrat(
-                        color: Colors.white, fontSize: 26,fontWeight: FontWeight.w600),
+                        color: Colors.white, fontSize: Globals.getFontSize(26),fontWeight: FontWeight.w600),
                   ),
                 )),
             Positioned(
@@ -47,6 +56,7 @@ class _SelectPositionState extends State<SelectPosition> {
                   width: Globals.width,
                   height: Globals.getHeight((899-470).toDouble()),
                   child: ListView(
+                    controller: _controller,
                     children: List.generate(Globals.positions[Globals.selectedSport].length, (index) {
                       return Container(
                         height: Globals.getHeight(58),
@@ -73,7 +83,7 @@ class _SelectPositionState extends State<SelectPosition> {
                                   curve: Curves.easeInOut));
                             }
                           },
-                          child: Text(Globals.positions[Globals.selectedSport][index].toUpperCase(),textAlign:TextAlign.center,style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.w400, letterSpacing: 2.89, color: Colors.white),),
+                          child: Text(Globals.positions[Globals.selectedSport][index].toUpperCase(),textAlign:TextAlign.center,style: GoogleFonts.montserrat(fontSize: Globals.getFontSize(17),fontWeight: FontWeight.w400, letterSpacing: 2.89, color: Colors.white),),
                         ),
                         decoration: BoxDecoration(
                             color: selIndex == index?Color(0xFF7585FF):Colors.black,
@@ -174,6 +184,21 @@ class _SelectPositionState extends State<SelectPosition> {
                       )
                   ),
                 )),
+            Positioned(
+                bottom: Globals.getHeight(15),
+                right: Globals.getWidth(5),
+                child: Container(
+                    child: Transform.rotate(
+                      angle: math.pi / 2,
+                      child: TextButton(
+                        onPressed: _handleKeyEvent,
+                        child: Icon(
+                          Icons.arrow_forward,
+                          color: Colors.white,
+                          size: Globals.getWidth(20),
+                        ),
+                      ),
+                    ))),
           ],
         ),
         decoration: BoxDecoration(

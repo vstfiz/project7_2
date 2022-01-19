@@ -38,7 +38,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   child: Text(
                     'forgot password'.toUpperCase(),
                     style: GoogleFonts.montserrat(
-                        fontSize: 16,
+                        fontSize: Globals.getWidth(16),
                         fontWeight: FontWeight.w400,
                         color: Colors.white,
                         letterSpacing: 1.59),
@@ -56,7 +56,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     child: Icon(
                       Icons.clear,
                       color: Colors.white,
-                      size: 30,
+                      size: Globals.getFontSize(20),
                     )),
               ),
               top: Globals.getHeight(70),
@@ -94,13 +94,13 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         },
                         style: GoogleFonts.montserrat(
                             color: Colors.white,
-                            fontSize: 20,
+                            fontSize: Globals.getWidth(20),
                             fontWeight: FontWeight.w400),
                         textAlignVertical: TextAlignVertical.center,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           suffix: Container(
-                            margin: EdgeInsets.only(right: 20.0, top: 40.0),
+                            margin: EdgeInsets.only(right: Globals.getWidth(20),top: Globals.getHeight(40)),
                             width: 30,
                             height: 30,
                             decoration: BoxDecoration(
@@ -125,7 +125,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           hintText: 'Email',
                           hintStyle: GoogleFonts.montserrat(
                               color: Colors.white.withOpacity(0.6),
-                              fontSize: 20,
+                              fontSize: Globals.getWidth(20),
                               fontWeight: FontWeight.w400),
                         ),
                       ),
@@ -138,7 +138,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   child: Text(
                     'or'.toUpperCase(),
                     style: GoogleFonts.montserrat(
-                        fontSize: 12,
+                        fontSize: Globals.getWidth(12),
                         fontWeight: FontWeight.w400,
                         color: Colors.white,
                         letterSpacing: 1.66),
@@ -177,14 +177,14 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         },
                         style: GoogleFonts.montserrat(
                             color: Colors.white,
-                            fontSize: 20,
+                            fontSize: Globals.getWidth(20),
                             fontWeight: FontWeight.w400),
                         keyboardType: TextInputType.phone,
                         textAlignVertical: TextAlignVertical.center,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           suffix: Container(
-                            margin: EdgeInsets.only(right: 20.0, top: 40.0),
+                            margin: EdgeInsets.only(right: Globals.getWidth(20),top: Globals.getHeight(40)),
                             width: 30,
                             height: 30,
                             decoration: BoxDecoration(
@@ -209,7 +209,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           hintText: 'Mobile Number',
                           hintStyle: GoogleFonts.montserrat(
                               color: Colors.white.withOpacity(0.6),
-                              fontSize: 20,
+                              fontSize: Globals.getWidth(20),
                               fontWeight: FontWeight.w400),
                         ),
                       ),
@@ -226,7 +226,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     child: Text(
                       'RESET PASSWORD',
                       style: GoogleFonts.montserrat(
-                          fontSize: 20,
+                          fontSize: Globals.getWidth(20),
                           fontWeight: FontWeight.w400,
                           letterSpacing: 2.89,
                           color: Colors.white),
@@ -244,7 +244,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     'Enter your email address or phone number\nto reset the password.',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.montserrat(
-                        fontSize: 17,
+                        fontSize: Globals.getWidth(17),
                         fontWeight: FontWeight.w400,
                         color: Colors.white,
                         letterSpacing: 0.17),

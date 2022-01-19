@@ -7,6 +7,7 @@ import 'package:project7_2/model/user.dart' as u;
 import 'package:project7_2/view/find_places/find_places.dart';
 import 'package:project7_2/view/locker_room/locker_room.dart';
 import 'package:project7_2/view/news_n_fixtues/news_n_fixtures.dart';
+import 'package:project7_2/view/user_profile/user_profile.dart';
 
 class Globals {
   static double height;
@@ -22,11 +23,13 @@ class Globals {
   static String dp;
   static bool hasLogin = false;
   static String status = 'rate';
+  static bool isFirstRun = true;
   static PageController pageController = new PageController(initialPage: 1);
   static var screens = [
     NewsNFixtures(),
     FindPLaces(),
     LockerRoom(),
+    ProfilePage()
   ];
   static GlobalKey<SliderMenuContainerState> keyDrawer;
   static String selectedSport = 'Football';

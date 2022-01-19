@@ -7,11 +7,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:geocoder/geocoder.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:project7_2/custom/clipped_profile/clipped_profile.dart';
 import 'package:project7_2/custom/globals.dart';
+import 'package:project7_2/custom/spinner_loader/spinner.dart';
 import 'package:project7_2/services/auth/auth.dart';
 import 'package:project7_2/view/auth/signin.dart';
 import 'package:project7_2/view/new_ui/left_side_navigation/left_panel.dart';
@@ -23,9 +26,11 @@ class FindPLaces extends StatefulWidget {
 
 class _FindPLacesState extends State<FindPLaces> {
   GoogleMapController _controller;
-  Location _location = Location();
+  Location _location = Location.instance;
   bool isFilterOpen = false;
+  Set<Marker> markers = Set.from([]);
   var tags = ['Today', 'Tomorrow', 'Monday', 'Friday', 'Football', 'Badminton'];
+  String locationValue = '...';
 
   Future<void> _loadingDialog(String value) {
     return showDialog<void>(
@@ -57,39 +62,75 @@ class _FindPLacesState extends State<FindPLaces> {
                   ),
                 ))));
   }
-
+BitmapDescriptor customIcon;
   String _darkMapStyle;
-@override
+
+  @override
   void initState() {
     super.initState();
     _loadMapStyles();
 
-}
+    }
+    _getCustomIcon()async{
+        ImageConfiguration configuration = createLocalImageConfiguration(context);
+        BitmapDescriptor ic = await createBitmapDescriptorFromIconData('assets/images/google_markers/football.png');
+        BitmapDescriptor ic1 = await createBitmapDescriptorFromIconData('assets/images/google_markers/cricket.png');
+        BitmapDescriptor ic2= await createBitmapDescriptorFromIconData('assets/images/google_markers/rugby.png');
+        BitmapDescriptor ic3 = await createBitmapDescriptorFromIconData('assets/images/google_markers/football.png');
+        BitmapDescriptor ic4= await createBitmapDescriptorFromIconData('assets/images/google_markers/football.png');
+        BitmapDescriptor ic5 = await createBitmapDescriptorFromIconData('assets/images/google_markers/football.png');
 
-  final Completer<GoogleMapController> _controllerStyler = Completer();
+        Marker m = new Marker(
+            markerId: new MarkerId('gvfsae'),
+            position: new LatLng(27.887452, 78.102636),
+            icon: BitmapDescriptor.fromJson(ic.toJson()),
+            infoWindow: InfoWindow(title: 'Football Court 1'));
+        Marker m1 = new Marker(
+            markerId: new MarkerId('gvfsafeae'),
+            position: new LatLng(27.885749182980597, 78.09622124202897),
+            icon: BitmapDescriptor.fromJson(ic1.toJson()),
+            infoWindow: InfoWindow(title: 'Rugby Court 1'));
+        Marker m2 = new Marker(
+            markerId: new MarkerId('gvfsdwaae'),
+            position: new LatLng(27.88224040697118, 78.0976159907334),
+            icon: BitmapDescriptor.fromJson(ic2.toJson()),
+            infoWindow: InfoWindow(title: 'Cricket Court 1'));
+        setState(() {
+          markers.add(m);
+          markers.add(m1);
+          markers.add(m2);
 
+        });
+    }
 
-  Future _loadMapStyles() async {
-    _darkMapStyle  = await rootBundle.loadString('assets/map_styles/dark_style.json');
-    await _setMapStyle();
+  Future<BitmapDescriptor> createBitmapDescriptorFromIconData(String key) async {
+    final bytes = await rootBundle.load(key);
+    Image(image: ResizeImage(AssetImage(key),width: 50),).image;
+    return BitmapDescriptor.fromBytes(bytes.buffer.asUint8List());
   }
 
-  void _onMapCreated(GoogleMapController _cntlr) {
+  Future _loadMapStyles() async {
+    _darkMapStyle =
+        await rootBundle.loadString('assets/map_styles/dark_style.json');
+  }
+
+  void _onMapCreated(GoogleMapController _cntlr) async{
+    await _getCustomIcon();
     _controller = _cntlr;
     _controller.setMapStyle(_darkMapStyle);
-    _location.onLocationChanged.listen((l) {
+    var _data = await _location.getLocation();
+    final coordinates = new Coordinates(_data.latitude, _data.longitude);
+    var addresses =
+    await Geocoder.local.findAddressesFromCoordinates(coordinates);
+    locationValue =
+        addresses.first.subAdminArea + ", " + addresses.first.subLocality;
+    _location.onLocationChanged.listen((l) async {
       _controller.animateCamera(
         CameraUpdate.newCameraPosition(
           CameraPosition(target: LatLng(l.latitude, l.longitude), zoom: 15),
         ),
       );
     });
-  }
-
-
-  Future _setMapStyle() async {
-    final controller = await _controllerStyler.future;
-    controller.setMapStyle(_darkMapStyle);
   }
 
   static final CameraPosition _kGooglePlex = CameraPosition(
@@ -155,7 +196,7 @@ class _FindPLacesState extends State<FindPLaces> {
                               setState(() {});
                             },
                             child: Text(
-                              'Kaveri Vatika, Aligarh',
+                              locationValue,
                               style: GoogleFonts.montserrat(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w400,
@@ -202,24 +243,26 @@ class _FindPLacesState extends State<FindPLaces> {
                   top: h * 0.15,
                   left: w * 0.0,
                   child: Container(
-                    height: h * 0.75,
+                    height: h * 0.61,
                     width: w,
                     child: GoogleMap(
                         onMapCreated: _onMapCreated,
                         mapType: MapType.normal,
+                        compassEnabled: true,
+                        markers: markers,
                         initialCameraPosition: _kGooglePlex,
                         zoomGesturesEnabled: true,
                         zoomControlsEnabled: false,
                         myLocationButtonEnabled: true,
                         myLocationEnabled: true,
-                        minMaxZoomPreference: MinMaxZoomPreference(13, 17)),
+                        minMaxZoomPreference: MinMaxZoomPreference(10, 50)),
                   )),
               Positioned(
                   bottom: 0.0,
                   left: 0.0,
                   child: Container(
                     // height: Globals.getHeight(65),
-                          width: w,
+                    width: w,
 
                     child: Stack(
                       alignment: Alignment.bottomCenter,
@@ -230,7 +273,8 @@ class _FindPLacesState extends State<FindPLaces> {
                             if (_offset.dy < _FindPLacesState._minHeight) {
                               _offset = Offset(0, _FindPLacesState._minHeight);
                               _isOpen = false;
-                            } else if (_offset.dy > _FindPLacesState._maxHeight) {
+                            } else if (_offset.dy >
+                                _FindPLacesState._maxHeight) {
                               _offset = Offset(0, _FindPLacesState._maxHeight);
                               _isOpen = true;
                             }
@@ -242,25 +286,42 @@ class _FindPLacesState extends State<FindPLaces> {
                             height: _offset.dy,
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(topLeft: Radius.circular(12),topRight: Radius.circular(12),),
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(12),
+                                  topRight: Radius.circular(12),
+                                ),
                                 gradient: LinearGradient(
-                                    colors: [Color(0xFF606CCD),Color(0xFF231F20),],
+                                    colors: [
+                                      Color(0xFF606CCD),
+                                      Color(0xFF231F20),
+                                    ],
                                     begin: Alignment.topCenter,
                                     end: Alignment.bottomCenter,
-                                    stops: [0.05,1.0]
+                                    stops: [0.05, 1.0])),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                ClippedProfileContainer(
+                                  height: 50,
+                                  width: 50,
+                                  imageUrl: 'https://i.pinimg.com/1200x/19/6a/35/196a35d09631dcdcb84578ce0f60146b.jpg',
                                 )
-                            ),
+                              ],
+                            )
                           ),
                         ),
                         // Positioned(child: child),
                         Positioned(
-                          // bottom: 2 * _FindPLacesState._minHeight - _offset.dy - 40,
-                          top: 0.0,
-                          child: TextButton(
-                            onPressed: _handleClick,
-                            child: Icon(_isOpen?Icons.clear:Icons.menu,color: Colors.white,size: 24,),
-                          )
-                        ),
+                            // bottom: 2 * _FindPLacesState._minHeight - _offset.dy - 40,
+                            top: 0.0,
+                            child: TextButton(
+                              onPressed: _handleClick,
+                              child: Icon(
+                                _isOpen ? Icons.clear : Icons.menu,
+                                color: Colors.white,
+                                size: 24,
+                              ),
+                            )),
                       ],
                     ),
                   )
@@ -310,8 +371,7 @@ class _FindPLacesState extends State<FindPLaces> {
                   //   },
                   // )
 
-
-              ),
+                  ),
             ],
           )),
         ),
@@ -320,7 +380,9 @@ class _FindPLacesState extends State<FindPLaces> {
           return Future.value(false);
         });
   }
-  static double _minHeight = Globals.getHeight(65), _maxHeight = Globals.getHeight(657);
+
+  static double _minHeight = Globals.getHeight(65),
+      _maxHeight = Globals.getHeight(657);
   Offset _offset = Offset(0, _minHeight);
   bool _isOpen = false;
 

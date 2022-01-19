@@ -6,11 +6,8 @@ import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:project7_2/custom/globals.dart';
-import 'package:project7_2/view/new_ui/onboarding/fill.dart';
-import 'package:project7_2/view/new_ui/onboarding/login.dart';
 import 'package:project7_2/view/new_ui/onboarding/position.dart';
-
-import 'lockerroom_welcome.dart';
+import 'dart:math' as math;
 
 class SelectSport extends StatefulWidget {
   _SelectSportState createState() => _SelectSportState();
@@ -19,6 +16,15 @@ class SelectSport extends StatefulWidget {
 class _SelectSportState extends State<SelectSport> {
   int selIndex;
   var sports = ['Cricket', 'Basketball','Tennis','Squash','Golf','Football','Futsal','Pool','Billiards','Table Tennis','Badminton'];
+  final ScrollController _controller = ScrollController();
+
+  void _handleKeyEvent() {
+    var offset = _controller.offset;
+    setState(() {
+      _controller.animateTo(offset + 100,
+          duration: Duration(milliseconds: 30), curve: Curves.ease);
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +42,7 @@ class _SelectSportState extends State<SelectSport> {
                     minFontSize: 26,
                     maxFontSize: 30,
                     style: GoogleFonts.montserrat(
-                        color: Colors.white, fontSize: 26,fontWeight: FontWeight.w600),
+                        color: Colors.white, fontSize: Globals.getFontSize(26),fontWeight: FontWeight.w600),
                   ),
                 )),
             Positioned(
@@ -47,6 +53,7 @@ class _SelectSportState extends State<SelectSport> {
                   width: Globals.width,
                   height: Globals.getHeight((899-470).toDouble()),
                   child: ListView(
+                    controller: _controller,
                     children: List.generate(sports.length, (index) {
                       return Container(
                         height: Globals.getHeight(58),
@@ -64,7 +71,7 @@ class _SelectSportState extends State<SelectSport> {
                                 duration: new Duration(milliseconds: 300),
                                 curve: Curves.easeInOut));
                           },
-                          child: Text(sports[index].toUpperCase(),style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.w400, letterSpacing: 2.89, color: Colors.white),),
+                          child: Text(sports[index].toUpperCase(),style: GoogleFonts.montserrat(fontSize: Globals.getFontSize(17),fontWeight: FontWeight.w400, letterSpacing: 2.89, color: Colors.white),),
                         ),
                         decoration: BoxDecoration(
                             color: selIndex == index?Color(0xFF7585FF):Colors.black,
@@ -177,6 +184,21 @@ class _SelectSportState extends State<SelectSport> {
                       )
                   ),
                 )),
+            Positioned(
+                bottom: Globals.getHeight(15),
+                right: Globals.getWidth(5),
+                child: Container(
+                    child: Transform.rotate(
+                      angle: math.pi / 2,
+                      child: TextButton(
+                        onPressed: _handleKeyEvent,
+                        child: Icon(
+                          Icons.arrow_forward,
+                          color: Colors.white,
+                          size: Globals.getWidth(20),
+                        ),
+                      ),
+                    ))),
           ],
         ),
         decoration: BoxDecoration(

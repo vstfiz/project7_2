@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:collection';
 import 'dart:ui';
 
+import 'package:achievement_view/achievement_view.dart';
+import 'package:achievement_view/achievement_widget.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,6 +14,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:project7_2/custom/globals.dart';
+import 'package:project7_2/custom/spinner_loader/spinner.dart';
 import 'package:project7_2/services/auth/auth.dart';
 import 'package:project7_2/view/new_ui/onboarding/fill.dart';
 import 'package:project7_2/view/new_ui/onboarding/gender.dart';
@@ -30,6 +33,7 @@ class _OTPState extends State<OTP> {
   int timeInSeconds;
   String smsOtp;
   Timer t;
+  bool isSpinnerOpen = false;
 
   _sendOtp() async {
     await verifyPhone(this.widget.phone, context);
@@ -67,18 +71,24 @@ class _OTPState extends State<OTP> {
                 height: Globals.getHeight(80),
                 child: Center(
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('Authenticating'.toUpperCase(),style: GoogleFonts.montserrat(fontWeight: FontWeight.w400,fontSize:20,letterSpacing: 1.6),),
-
-                        Container(child:  LinearProgressIndicator(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Authenticating'.toUpperCase(),
+                      style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.w400,
+                          fontSize: Globals.getFontSize(20),
+                          letterSpacing: 1.6),
+                    ),
+                    Container(
+                        child: LinearProgressIndicator(
                           backgroundColor: Colors.grey,
                           valueColor:
-                          AlwaysStoppedAnimation<Color>(Colors.blueGrey),
-                        ),width: Globals.getWidth(200))
-                      ],
-                    )
-                ))));
+                              AlwaysStoppedAnimation<Color>(Colors.blueGrey),
+                        ),
+                        width: Globals.getWidth(200))
+                  ],
+                )))));
   }
 
   @override
@@ -100,7 +110,7 @@ class _OTPState extends State<OTP> {
                   child: Text(
                     'validate number'.toUpperCase(),
                     style: GoogleFonts.montserrat(
-                        fontSize: 16,
+                        fontSize: Globals.getFontSize(16),
                         fontWeight: FontWeight.w400,
                         color: Colors.white,
                         letterSpacing: 1.59),
@@ -119,7 +129,7 @@ class _OTPState extends State<OTP> {
                     child: Icon(
                       Icons.arrow_back,
                       color: Colors.white,
-                      size: 30,
+                      size: Globals.getFontSize(20),
                     )),
               ),
               top: Globals.getHeight(58),
@@ -132,7 +142,7 @@ class _OTPState extends State<OTP> {
                     'A 6-digit confirmation code has been sent\nto ${this.widget.phone.substring(3, 6)}-${this.widget.phone.substring(6, 9)}-${this.widget.phone.substring(9)} via SMS. ',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.montserrat(
-                        fontSize: 17,
+                        fontSize: Globals.getFontSize(17),
                         fontWeight: FontWeight.w400,
                         color: Colors.white,
                         letterSpacing: 0.17),
@@ -147,7 +157,7 @@ class _OTPState extends State<OTP> {
                     width: Globals.width * 0.82,
                     child: PinCodeTextField(
                       textStyle: GoogleFonts.montserrat(
-                        fontSize: 20,
+                        fontSize: Globals.getFontSize(20),
                         color: Colors.white,
                       ),
                       appContext: context,
@@ -171,33 +181,74 @@ class _OTPState extends State<OTP> {
                       keyboardAppearance: Brightness.dark,
                       autoDismissKeyboard: true,
                       length: 6,
-                        onChanged: (value) {
-                          print(value);
-                          setState(() {
-                            smsOtp = value;
-                          });
-                        },
+                      onChanged: (value) {
+                        print(value);
+                        setState(() {
+                          smsOtp = value;
+                        });
+                      },
                       onCompleted: (value) async {
                         print(value);
-                        _loadingDialog('dawd');
+                       setState(() {
+                         isSpinnerOpen = true;
+                       });
                         try {
                           User u = await signInWithPhone(value, context);
-                          if(u!=null){
+                          if (u != null) {
                             t.cancel();
                             // await u.linkWithCredential(Globals.creationAuthCredential);
-                            Navigator.pop(context);
-                            Navigator.of(context).pushReplacement(PageTransition(
-                                type: PageTransitionType.rightToLeft,
-                                child: Data(),
-                                duration: new Duration(milliseconds: 300),
-                                curve: Curves.easeInOut));
+                            Navigator.of(context).pushReplacement(
+                                PageTransition(
+                                    type: PageTransitionType.rightToLeft,
+                                    child: Data(),
+                                    duration: new Duration(milliseconds: 300),
+                                    curve: Curves.easeInOut));
+                          } else {
+                            setState(() {
+                              isSpinnerOpen = false;
+                            });
+                            AchievementView(context,
+                                title: "Error",
+                                subTitle: "OTP Authentication Failure",
+                                //onTab: _onTabAchievement,
+                                icon: Icon(
+                                  Icons.clear,
+                                  color: Colors.red,
+                                  size: 24,
+                                ),
+                                typeAnimationContent:
+                                AnimationTypeAchievement
+                                    .fadeSlideToUp,
+                                borderRadius: 5.0,
+                                color: Colors.blueGrey,
+                                alignment: Alignment.topCenter,
+                                duration: Duration(milliseconds: 1500),
+                                isCircle: true)
+                              ..show();
                           }
-                          else{Navigator.pop(context);Toast.show('OTP Authentication Failure', context);}
-
                         } catch (e) {
-                          Navigator.pop(context);
-                            print(e.toString());
-                            Toast.show(e.toString(), context);
+                          setState(() {
+                            isSpinnerOpen = false;
+                          });
+                          print(e.toString());
+                          AchievementView(context,
+                              title: "Error",
+                              subTitle: e.toString(),
+                              //onTab: _onTabAchievement,
+                              icon: Icon(
+                                Icons.clear,
+                                color: Colors.red,
+                                size: 24,
+                              ),
+                              typeAnimationContent:
+                              AnimationTypeAchievement
+                                  .fadeSlideToUp,
+                              borderRadius: 5.0,
+                              color: Colors.blueGrey,
+                              alignment: Alignment.topCenter,
+                              duration: Duration(milliseconds: 1500),
+                              isCircle: true)
+                            ..show();
                         }
                       },
                     ))),
@@ -217,7 +268,7 @@ class _OTPState extends State<OTP> {
                       'Resend Confirmation code (0:${timeInSeconds.toString()})',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.montserrat(
-                          fontSize: 14,
+                          fontSize: Globals.getFontSize(14),
                           fontWeight: FontWeight.w400,
                           color: timeInSeconds != 0
                               ? Color(0xFF6C7B8A)
@@ -226,6 +277,10 @@ class _OTPState extends State<OTP> {
                     ),
                   )),
               top: Globals.getHeight(540.53),
+            ),
+            Positioned(
+              child: Spinner(),
+              top: Globals.getHeight(620.53),left: Globals.getWidth(157),
             ),
           ],
         ),

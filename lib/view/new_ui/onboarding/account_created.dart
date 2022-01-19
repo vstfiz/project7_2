@@ -13,8 +13,6 @@ import 'package:project7_2/custom/globals.dart';
 import 'package:project7_2/view/new_ui/onboarding/login.dart';
 import 'package:project7_2/view/new_ui/onboarding/phone_login.dart';
 
-import 'lockerroom_welcome.dart';
-
 class AccountCreated extends StatefulWidget {
   _AccountCreatedState createState() => _AccountCreatedState();
 }

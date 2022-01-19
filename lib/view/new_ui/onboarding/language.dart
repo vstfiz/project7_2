@@ -9,7 +9,6 @@ import 'package:project7_2/custom/globals.dart';
 import 'package:project7_2/view/new_ui/onboarding/fill.dart';
 import 'package:project7_2/view/new_ui/onboarding/login.dart';
 
-import 'lockerroom_welcome.dart';
 
 class SelectLanguage extends StatefulWidget {
   _SelectLanguageState createState() => _SelectLanguageState();

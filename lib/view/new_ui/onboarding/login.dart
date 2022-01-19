@@ -1,4 +1,6 @@
 import 'dart:ui';
+import 'package:achievement_view/achievement_view.dart';
+import 'package:achievement_view/achievement_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fAuth;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:email_validator/email_validator.dart';
@@ -10,16 +12,16 @@ import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:project7_2/custom/globals.dart';
+import 'package:project7_2/custom/spinner_loader/spinner.dart';
 import 'package:project7_2/database/firebase.dart';
 import 'package:project7_2/services/auth/auth.dart';
 import 'package:project7_2/view/home_screen/home_screen.dart';
 import 'package:project7_2/view/new_ui/onboarding/forgot_password.dart';
 import 'package:project7_2/view/new_ui/onboarding/loginSocial.dart';
 import 'package:project7_2/view/new_ui/onboarding/phone_login.dart';
-import 'package:project7_2/view/new_ui/onboarding/signup.dart' as s;
+import 'package:project7_2/view/new_ui/onboarding/signup.dart';
 import 'package:toast/toast.dart';
 
-import 'lockerroom_welcome.dart';
 
 class Login extends StatefulWidget {
   _LoginState createState() => _LoginState();
@@ -27,6 +29,7 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   bool corrEmail = false;
+  bool isSpinnerOpen = false;
   bool corrPassword = false;
   TextEditingController _usernameController = new TextEditingController();
   TextEditingController _passwordController = new TextEditingController();
@@ -54,7 +57,7 @@ class _LoginState extends State<Login> {
                         value,
                         style: TextStyle(
                             fontFamily: "Livvic",
-                            fontSize: 23,
+                            fontSize: Globals.getFontSize(23),
                             letterSpacing: 1),
                       )
                     ],
@@ -73,16 +76,18 @@ class _LoginState extends State<Login> {
           children: [
             Positioned(
                 top: Globals.getHeight(628),
-                left: Globals.width * 0.1,
-                child: Container(
+                left: isSpinnerOpen?Globals.getWidth(157):Globals.width * 0.1,
+                child:isSpinnerOpen?Spinner(): Container(
                   height: Globals.getHeight(58),
                   width: Globals.width * 0.8,
                   child: TextButton(
                     onPressed: () async {
                       try {
-                        _loadingDialog('Logging In');
                         if (EmailValidator.validate(_usernameController.text)) {
                           if (_passwordController.text != '') {
+                            setState(() {
+                              isSpinnerOpen = true;
+                            });
                             auth = fAuth.FirebaseAuth.instance;
                             fAuth.User uc =
                                 (await auth.signInWithEmailAndPassword(
@@ -90,7 +95,9 @@ class _LoginState extends State<Login> {
                                         password: _passwordController.text))
                                     .user;
                             await FirebaseDB.getData();
-                            Navigator.pop(context);
+                            setState(() {
+                              isSpinnerOpen = false;
+                            });
                             Navigator.of(context).pushReplacement(
                                 PageTransition(
                                     type: PageTransitionType.rightToLeft,
@@ -98,20 +105,73 @@ class _LoginState extends State<Login> {
                                     duration: new Duration(milliseconds: 300),
                                     curve: Curves.easeInOut));
                           } else {
-                            Toast.show('Please enter Password', context);
+                            AchievementView(context,
+                                title: "Invalid Password",
+                                subTitle: "Enter valid password",
+                                //onTab: _onTabAchievement,
+                                icon: Icon(
+                                  Icons.clear,
+                                  color: Colors.red,
+                                  size: 24,
+                                ),
+                                typeAnimationContent:
+                                AnimationTypeAchievement
+                                    .fadeSlideToUp,
+                                borderRadius: 5.0,
+                                color: Colors.blueGrey,
+                                alignment: Alignment.topCenter,
+                                duration: Duration(milliseconds: 1500),
+                                isCircle: true)
+                              ..show();
                           }
                         } else {
-                          Toast.show('Please enter Username', context);
+                          AchievementView(context,
+                              title: "Invalid Email Address",
+                              subTitle: "Enter valid email address in xx@xy.co",
+                              //onTab: _onTabAchievement,
+                              icon: Icon(
+                                Icons.clear,
+                                color: Colors.red,
+                                size: 24,
+                              ),
+                              typeAnimationContent:
+                              AnimationTypeAchievement
+                                  .fadeSlideToUp,
+                              borderRadius: 5.0,
+                              color: Colors.blueGrey,
+                              alignment: Alignment.topCenter,
+                              duration: Duration(milliseconds: 1500),
+                              isCircle: true)
+                            ..show();
                         }
                       } catch (e) {
-                        Navigator.pop(context);
-                        Toast.show(e.toString(), context);
+                        setState(() {
+                          isSpinnerOpen = false;
+                        });
+                        AchievementView(context,
+                            title: "Error",
+                            subTitle: e.toString(),
+                            //onTab: _onTabAchievement,
+                            icon: Icon(
+                              Icons.clear,
+                              color: Colors.red,
+                              size: 24,
+                            ),
+                            typeAnimationContent:
+                            AnimationTypeAchievement
+                                .fadeSlideToUp,
+                            borderRadius: 5.0,
+                            color: Colors.blueGrey,
+                            alignment: Alignment.topCenter,
+                            duration: Duration(milliseconds: 1500),
+                            isCircle: true)
+                          ..show();
                       }
                     },
                     child: Text(
                       'SIGN IN',
                       style: GoogleFonts.montserrat(
-                          fontSize: 20,
+                          fontSize: Globals.getFontSize(20),
                           fontWeight: FontWeight.w400,
                           letterSpacing: 2.89,
                           color: Colors.white),
@@ -140,7 +200,7 @@ class _LoginState extends State<Login> {
                       'OR',
                       style: GoogleFonts.montserrat(
                           color: Colors.white,
-                          fontSize: 12,
+                          fontSize: Globals.getFontSize(12),
                           letterSpacing: 1.73,
                           fontWeight: FontWeight.w400),
                     ))),
@@ -170,7 +230,7 @@ class _LoginState extends State<Login> {
                     child: Text(
                       'ENTER MOBILE NUMBER',
                       style: GoogleFonts.montserrat(
-                          fontSize: 20,
+                          fontSize: Globals.getFontSize(20),
                           fontWeight: FontWeight.w400,
                           letterSpacing: 1.67,
                           color: Colors.white),
@@ -211,6 +271,7 @@ class _LoginState extends State<Login> {
                       ),
                       child: TextField(
                         controller: _usernameController,
+                        textInputAction: TextInputAction.next,
                         onChanged: (value) {
                           if (EmailValidator.validate(value)) {
                             setState(() {
@@ -224,13 +285,13 @@ class _LoginState extends State<Login> {
                         },
                         style: GoogleFonts.montserrat(
                             color: Colors.white,
-                            fontSize: 20,
+                            fontSize: Globals.getFontSize(20),
                             fontWeight: FontWeight.w400),
                         textAlignVertical: TextAlignVertical.center,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           suffix: Container(
-                            margin: EdgeInsets.only(right: 20.0, top: 40.0),
+                            margin: EdgeInsets.only(right: Globals.getWidth(20),top: Globals.getHeight(40)),
                             width: 30,
                             height: 30,
                             decoration: BoxDecoration(
@@ -255,7 +316,7 @@ class _LoginState extends State<Login> {
                           hintText: 'Email',
                           hintStyle: GoogleFonts.montserrat(
                               color: Colors.white.withOpacity(0.6),
-                              fontSize: 20,
+                              fontSize: Globals.getFontSize(20),
                               fontWeight: FontWeight.w400),
                         ),
                       ),
@@ -280,6 +341,7 @@ class _LoginState extends State<Login> {
                       ),
                       child: TextField(
                         controller: _passwordController,
+                        textInputAction: TextInputAction.done,
                         obscureText: true,
                         obscuringCharacter: '*',
                         onChanged: (value) {
@@ -295,13 +357,13 @@ class _LoginState extends State<Login> {
                         },
                         style: GoogleFonts.montserrat(
                             color: Colors.white,
-                            fontSize: 20,
+                            fontSize: Globals.getFontSize(20),
                             fontWeight: FontWeight.w400),
                         textAlignVertical: TextAlignVertical.center,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           suffix: Container(
-                            margin: EdgeInsets.only(right: 20.0, top: 40.0),
+                            margin: EdgeInsets.only(right: Globals.getWidth(20),top: Globals.getHeight(40)),
                             width: 30,
                             height: 30,
                             decoration: BoxDecoration(
@@ -326,7 +388,7 @@ class _LoginState extends State<Login> {
                           hintText: 'Password',
                           hintStyle: GoogleFonts.montserrat(
                               color: Colors.white.withOpacity(0.6),
-                              fontSize: 20,
+                              fontSize: Globals.getFontSize(20),
                               fontWeight: FontWeight.w400),
                         ),
                       ),
@@ -349,7 +411,7 @@ class _LoginState extends State<Login> {
                     'Forgot Details ?',
                     style: GoogleFonts.montserrat(
                         color: Colors.white,
-                        fontSize: 12,
+                        fontSize: Globals.getFontSize(12),
                         fontWeight: FontWeight.w400,
                         letterSpacing: 1.73),
                   ),
@@ -362,7 +424,7 @@ class _LoginState extends State<Login> {
                   onPressed: () {
                     Navigator.of(context).pushReplacement(PageTransition(
                         type: PageTransitionType.rightToLeft,
-                        child: s.Singup(),
+                        child: SignUp(),
                         duration: new Duration(milliseconds: 300),
                         curve: Curves.easeInOut));
                   },
@@ -370,7 +432,7 @@ class _LoginState extends State<Login> {
                     'Create Account',
                     style: GoogleFonts.montserrat(
                         color: Colors.white,
-                        fontSize: 12,
+                        fontSize: Globals.getFontSize(12),
                         fontWeight: FontWeight.w400,
                         letterSpacing: 1.73),
                   ),
@@ -390,7 +452,7 @@ class _LoginState extends State<Login> {
                     'Social',
                     style: GoogleFonts.montserrat(
                         color: Colors.white,
-                        fontSize: 12,
+                        fontSize: Globals.getFontSize(12),
                         fontWeight: FontWeight.w400,
                         letterSpacing: 1.73),
                   ),

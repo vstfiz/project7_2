@@ -1,7 +1,4 @@
 import 'dart:ui';
-
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -12,8 +9,8 @@ import 'package:page_transition/page_transition.dart';
 import 'package:project7_2/custom/globals.dart';
 import 'package:project7_2/view/new_ui/onboarding/forgot_password.dart';
 import 'package:project7_2/view/new_ui/onboarding/otp_login.dart';
+import 'package:project7_2/view/new_ui/onboarding/signup.dart';
 
-import 'lockerroom_welcome.dart';
 import 'signup.dart' as s;
 
 class PhoneLogin extends StatefulWidget {
@@ -48,7 +45,7 @@ class _PhoneLoginState extends State<PhoneLogin> {
                           duration: new Duration(milliseconds: 300),
                           curve: Curves.easeInOut));
                     },
-                    child: Text('SEND OTP',style: GoogleFonts.montserrat(fontSize: 20,fontWeight: FontWeight.w400, letterSpacing: 2.89, color: Colors.white),),
+                    child: Text('SEND OTP',style: GoogleFonts.montserrat(fontSize: Globals.getFontSize(20),fontWeight: FontWeight.w400, letterSpacing: 2.89, color: Colors.white),),
                   ),
                   decoration: BoxDecoration(
                       color: Color(0xFF7585FF),
@@ -102,13 +99,13 @@ class _PhoneLoginState extends State<PhoneLogin> {
                         },
                         style: GoogleFonts.montserrat(
                             color: Colors.white,
-                            fontSize: 20,
+                            fontSize: Globals.getFontSize(20),
                             fontWeight: FontWeight.w400),
                         textAlignVertical: TextAlignVertical.center,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           suffix: Container(
-                            margin: EdgeInsets.only(right: 20.0,top: 40.0),
+                            margin: EdgeInsets.only(right: Globals.getWidth(20),top: Globals.getHeight(40)),
                             width: 30,
                             height: 30,
                             decoration: BoxDecoration(
@@ -123,7 +120,7 @@ class _PhoneLoginState extends State<PhoneLogin> {
                           hintText: 'MOBILE NUMBER',
                           hintStyle: GoogleFonts.montserrat(
                               color: Colors.white.withOpacity(0.6),
-                              fontSize: 20,
+                              fontSize: Globals.getFontSize(20),
                               fontWeight: FontWeight.w400),
                         ),
                       ),
@@ -146,7 +143,7 @@ class _PhoneLoginState extends State<PhoneLogin> {
                       child:  Text(
                         'Forgot Details ?',
                         style: GoogleFonts.montserrat(
-                            color: Colors.white, fontSize: 12,fontWeight: FontWeight.w400, letterSpacing: 1.73),
+                            color: Colors.white, fontSize: Globals.getFontSize(12),fontWeight: FontWeight.w400, letterSpacing: 1.73),
                       ),
                     )
                 )),
@@ -158,14 +155,14 @@ class _PhoneLoginState extends State<PhoneLogin> {
                       onPressed: (){
                         Navigator.of(context).pushReplacement( PageTransition(
                             type: PageTransitionType.rightToLeft,
-                            child: s.Singup(),
+                            child: SignUp(),
                             duration: new Duration(milliseconds: 300),
                             curve: Curves.easeInOut));
                       },
                       child:  Text(
                         'Create Account',
                         style: GoogleFonts.montserrat(
-                            color: Colors.white, fontSize: 12,fontWeight: FontWeight.w400,letterSpacing: 1.73),
+                            color: Colors.white, fontSize: Globals.getFontSize(12),fontWeight: FontWeight.w400,letterSpacing: 1.73),
                       ),
                     )
                 )),

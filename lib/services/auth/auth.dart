@@ -60,9 +60,10 @@ Future<User> signInWithPhone(String otp,BuildContext context) async {
       smsCode: otp,
     );
     UserCredential linkauthresult=await FirebaseAuth.instance.currentUser.linkWithCredential(credential);
-    final User user = (await auth.signInWithCredential(credential)).user;
-    print("Successfully signed in UID: ${user.uid}");
-    return user;
+
+    // final User user = (await auth.signInWithCredential(credential)).user;
+    print("Successfully signed in UID: ${linkauthresult.user.uid}");
+    return linkauthresult.user;
   } catch (e) {
     print("Failed to sign in: " + e.toString());
     return null;
