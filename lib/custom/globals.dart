@@ -67,6 +67,18 @@ class Globals {
     ]
   };
 
+  static var teams1 = [
+      'Liverpool',
+      'man united',
+      'chelsea',
+      'real madrid',
+      'barcelona',
+      'psg',
+      'city',
+      'bayern',
+      'arsenal'
+
+  ];
   static double getHeight(double val) {
     return (val / 899) * height;
   }

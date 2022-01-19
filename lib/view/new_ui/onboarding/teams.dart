@@ -184,7 +184,8 @@ class _SelectFavTeamState extends State<SelectFavTeam> {
                       image: DecorationImage(
                           image: AssetImage(
                               'assets/images/onboarding/layer_3.png'),
-                          fit: BoxFit.scaleDown)),
+                          fit: BoxFit.scaleDown),
+                  backgroundBlendMode: BlendMode.overlay),
                 )),
             Positioned(
                 top: Globals.getHeight(169),

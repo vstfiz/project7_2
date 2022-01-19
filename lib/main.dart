@@ -27,16 +27,18 @@ import 'package:project7_2/view/new_ui/onboarding/validate_password.dart';
 import 'package:project7_2/view/new_ui/onboarding/welcome_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'custom/drop_down/test.dart';
+
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  // WidgetsFlutterBinding.ensureInitialized();
   Paint.enableDithering = true;
-  await Firebase.initializeApp();
-  SharedPreferences _sharedPreferences = await SharedPreferences.getInstance();
-  bool res = _sharedPreferences.getBool('firstRun');
-  if(!(res!=null)){
-    Globals.isFirstRun = true;
-    _sharedPreferences.setBool('firstRun', false);
-  }
+  // await Firebase.initializeApp();
+  // SharedPreferences _sharedPreferences = await SharedPreferences.getInstance();
+  // bool res = _sharedPreferences.getBool('firstRun');
+  // if(!(res!=null)){
+  //   Globals.isFirstRun = true;
+  //   _sharedPreferences.setBool('firstRun', false);
+  // }
   runApp(MyApp());
 }
 
@@ -52,21 +54,21 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               primarySwatch: Colors.lightBlue,
             ),
-            home:
-            StreamBuilder(
-              stream: auth.authStateChanges(),
-              builder: (context, snapshot) {
-
-                if (snapshot.hasData) {
-                  fAuth.User u = snapshot.data;
-                  Globals.uid = u.uid;
-                  Globals.name = u.displayName;
-                  print(u.uid);
-                  Globals.hasLogin = true;
-                }
-                return SplashScreen();
-              },
-            )
+            home: Test()
+            // StreamBuilder(
+            //   stream: auth.authStateChanges(),
+            //   builder: (context, snapshot) {
+            //
+            //     if (snapshot.hasData) {
+            //       fAuth.User u = snapshot.data;
+            //       Globals.uid = u.uid;
+            //       Globals.name = u.displayName;
+            //       print(u.uid);
+            //       Globals.hasLogin = true;
+            //     }
+            //     return SplashScreen();
+            //   },
+            // )
         );
       });
     });
