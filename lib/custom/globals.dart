@@ -33,7 +33,7 @@ class Globals {
   ];
   static GlobalKey<SliderMenuContainerState> keyDrawer;
   static String selectedSport = 'Football';
-  static Map positions = {
+  static Map<String,List<String>> positions = {
     'Cricket': [
       'Bowler',
       'Batsmen',
@@ -45,7 +45,7 @@ class Globals {
     'Tennis': ['Left Handed', 'Right Handed'],
     'Squash': ['Left Handed', 'Right Handed'],
     'Golf': ['Left Handed', 'Right Handed'],
-    'Football': ['Defender', 'MidFielder', 'Attacker', 'Goal Keeper'],
+    'Football': ['Defender', 'MidFielder', 'Attacker', 'Goal Keeper','grdrg','fgbdrgeh','gbtdr'],
     'Futsal': ['Forward', 'Winger', 'Defender', 'GoalKeeper'],
     'Pool': ['Left Handed', 'Right Handed'],
     'Billiards': ['Left Handed', 'Right Handed'],

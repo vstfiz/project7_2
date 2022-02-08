@@ -4,9 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:project7_2/custom/globals.dart';
 import 'package:project7_2/services/auth/auth.dart';
+import 'package:project7_2/view/find_places/find_places.dart';
 import 'package:project7_2/view/home_screen/home_screen.dart';
+import 'package:project7_2/view/new_ui/create_game/create_game_event.dart';
+import 'package:project7_2/view/new_ui/create_game/event_settings.dart';
+import 'package:project7_2/view/new_ui/create_game/find_invite_friend.dart';
+import 'package:project7_2/view/new_ui/create_game/game_create_confirmation.dart';
+import 'package:project7_2/view/new_ui/create_game/game_created.dart';
+import 'package:project7_2/view/new_ui/create_game/pick_positions.dart';
 import 'package:project7_2/view/new_ui/left_side_navigation/teams.dart';
 import 'package:project7_2/view/new_ui/left_side_navigation/venue_bookings.dart';
+import 'package:project7_2/view/new_ui/locker_room/chat_screen.dart';
 import 'package:project7_2/view/new_ui/onboarding/account_created.dart';
 import 'package:project7_2/view/new_ui/onboarding/fill.dart';
 import 'package:project7_2/view/new_ui/onboarding/forgot_password.dart';
@@ -25,6 +33,7 @@ import 'package:project7_2/view/new_ui/onboarding/sport.dart';
 import 'package:project7_2/view/new_ui/onboarding/teams.dart';
 import 'package:project7_2/view/new_ui/onboarding/validate_password.dart';
 import 'package:project7_2/view/new_ui/onboarding/welcome_screen.dart';
+import 'package:responsify/responsify.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'custom/drop_down/test.dart';
@@ -49,26 +58,29 @@ class MyApp extends StatelessWidget {
       return OrientationBuilder(builder: (context, orientation) {
         Globals.height = constraints.maxHeight;
         Globals.width = constraints.maxWidth;
+        print(Globals.height);
+        print(Globals.width);
+        // print(MediaQuery.of(context).devicePixelRatio);
         return MaterialApp(
             title: 'OnField',
             theme: ThemeData(
               primarySwatch: Colors.lightBlue,
             ),
-            home: Test()
-            // StreamBuilder(
-            //   stream: auth.authStateChanges(),
-            //   builder: (context, snapshot) {
-            //
-            //     if (snapshot.hasData) {
-            //       fAuth.User u = snapshot.data;
-            //       Globals.uid = u.uid;
-            //       Globals.name = u.displayName;
-            //       print(u.uid);
-            //       Globals.hasLogin = true;
-            //     }
-            //     return SplashScreen();
-            //   },
-            // )
+            home: ChatScreen()
+          // StreamBuilder(
+          //   stream: auth.authStateChanges(),
+          //   builder: (context, snapshot) {
+          //
+          //     if (snapshot.hasData) {
+          //       fAuth.User u = snapshot.data;
+          //       Globals.uid = u.uid;
+          //       Globals.name = u.displayName;
+          //       print(u.uid);
+          //       Globals.hasLogin = true;
+          //     }
+          //     return SplashScreen();
+          //   },
+          // )
         );
       });
     });

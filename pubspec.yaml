@@ -56,6 +56,10 @@ dependencies:
   achievement_view: ^0.2.1
   flutter_screenutil: ^5.0.3
   shared_preferences: ^2.0.12
+  responsify: ^1.0.0+5
+  responsive_sizer: ^3.0.5+1
+  flutter_switch: ^0.3.2
+  speech_to_text: ^5.4.2
 
 dev_dependencies:
   flutter_test:
@@ -80,6 +84,7 @@ flutter:
     - assets/images/google_markers/
 #    - assets/images/alerts/
     - assets/images/left_panel/
+    - assets/images/homescreen/
     - assets/images/onboarding/layer_2.png
     - assets/images/onboarding/layer_3.png
     - assets/images/onboarding/stack.png

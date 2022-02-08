@@ -29,7 +29,7 @@ class DropDownCalendar extends StatefulWidget {
 }
 
 class _DropDownCalendarState extends State<DropDownCalendar> {
-  DateTime _currentDate = DateTime(2022, 1, 19);
+  DateTime _currentDate = DateTime.now();
   static Widget _eventIcon = new Container(
     decoration: new BoxDecoration(
         color: Colors.white,
@@ -43,71 +43,16 @@ class _DropDownCalendarState extends State<DropDownCalendar> {
 
   EventList<Event> _markedDateMap = new EventList<Event>(
     events: {
-      new DateTime(2022, 1, 10): [
-        new Event(
-          date: new DateTime(2022, 1, 10),
-          title: 'Event 1',
-          icon: _eventIcon,
-          dot: Container(
-            margin: EdgeInsets.symmetric(horizontal: 1.0),
-            color: Colors.red,
-            height: 5.0,
-            width: 5.0,
-          ),
-        ),
-        new Event(
-          date: new DateTime(2022, 1, 10),
-          title: 'Event 2',
-          icon: _eventIcon,
-        ),
-        new Event(
-          date: new DateTime(2022, 1, 10),
-          title: 'Event 3',
-          icon: _eventIcon,
-        ),
-      ],
     },
   );
+  String value;
 
   @override
   void initState() {
-    /// Add more events to _markedDateMap EventList
-    _markedDateMap.add(
-        new DateTime(2022, 1, 25),
-        new Event(
-          date: new DateTime(2022, 1, 25),
-          title: 'Event 5',
-          icon: _eventIcon,
-        ));
-
-    _markedDateMap.add(
-        new DateTime(2022, 1, 10),
-        new Event(
-          date: new DateTime(2022, 1, 10),
-          title: 'Event 4',
-          icon: _eventIcon,
-        ));
-
-    _markedDateMap.addAll(new DateTime(2022, 1, 11), [
-      new Event(
-        date: new DateTime(2022, 1, 11),
-        title: 'Event 1',
-        icon: _eventIcon,
-      ),
-      new Event(
-        date: new DateTime(2022, 1, 11),
-        title: 'Event 2',
-        icon: _eventIcon,
-      ),
-      new Event(
-        date: new DateTime(2022, 1, 11),
-        title: 'Event 3',
-        icon: _eventIcon,
-      ),
-    ]);
+    value = _currentDate.day.toString()+"/"+_currentDate.month.toString()+"/"+_currentDate.year.toString();
     super.initState();
   }
-  String value = "DD/MM/YYYY";
+
   OverlayEntry _overlayEntry;
   LayerLink link = LayerLink();
   bool isOverlayRendered = false;
@@ -152,6 +97,8 @@ class _DropDownCalendarState extends State<DropDownCalendar> {
                         color: Colors.white,
                       ),
                       thisMonthDayBorderColor: Colors.grey,
+                    minSelectedDate: new DateTime(_currentDate.year,_currentDate.month,_currentDate.day
+                    ),
                       weekFormat: false,
                       markedDatesMap: _markedDateMap,
                       height: 420.0,
@@ -161,6 +108,11 @@ class _DropDownCalendarState extends State<DropDownCalendar> {
                         setState(() {
                           value = date.day.toString()+"/"+date.month.toString()+"/"+date.year.toString();
                         });
+                        _toggleOverlay();
+                        setState(() {
+                          isOverlayRendered = false;
+                        });
+
                     },
                     ),
                   padding: EdgeInsets.symmetric(vertical: 20,horizontal: 25),
@@ -219,3 +171,54 @@ class _DropDownCalendarState extends State<DropDownCalendar> {
     );
   }
 }
+
+//
+// Container(
+// margin: EdgeInsets.all(widget.dayPadding),
+// padding: EdgeInsets.all(widget.dayPadding),
+// decoration: BoxDecoration(
+// shape: BoxShape.circle,
+// border: Border.all(
+// color: Colors.white,
+// )
+// ),
+// child: TextButton(
+// onPressed: () => _onDayLongPressed(now),
+// // onPressed: widget.disableDayPressed ? null : () => _onDayPressed(now),
+// child: Stack(
+// children: widget.showIconBehindDayText
+// ? <Widget>[
+// widget.markedDatesMap != null
+// ? _renderMarkedMapContainer(now)
+// : Container(),
+// getDayContainer(
+// isSelectable,
+// index,
+// isSelectedDay,
+// isToday,
+// isPrevMonthDay,
+// textStyle,
+// defaultTextStyle,
+// isNextMonthDay,
+// isThisMonthDay,
+// now),
+// ]
+// : <Widget>[
+// getDayContainer(
+// isSelectable,
+// index,
+// isSelectedDay,
+// isToday,
+// isPrevMonthDay,
+// textStyle,
+// defaultTextStyle,
+// isNextMonthDay,
+// isThisMonthDay,
+// now),
+// widget.markedDatesMap != null
+// ? _renderMarkedMapContainer(now)
+// : Container(),
+// ],
+// ),
+// ),
+// );

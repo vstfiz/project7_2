@@ -44,10 +44,12 @@ class _CustomDropDownState extends State<CustomDropDown> {
     RenderBox renderBox = context.findRenderObject();
     var size = renderBox.size;
     var offset = renderBox.localToGlobal(Offset.zero);
+    print(offset.dy);
     return OverlayEntry(
       builder: (context) => Positioned(
           left: offset.dx,
           top: offset.dy + size.height + 10.0,
+          bottom: Globals.height - (offset.dy + size.height + 10.0 + Globals.getHeight(376)),
           width: widget.width,
           child: Material(
             type: MaterialType.transparency,
@@ -58,17 +60,18 @@ class _CustomDropDownState extends State<CustomDropDown> {
                 clipper: ArrowClipper(widget.radius),
                 child: Container(
                   width: widget.width,
-                  height: widget.items.length * 60.toDouble() + 15,
+                  height: Globals.getHeight(360) + 15,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(widget.radius),            color: Color(0xFF231F20),
 
                   ),
                   padding: EdgeInsets.only(top: 15),
-                  child: Column(
+                  child: ListView(
+                    padding: EdgeInsets.zero,
                     children: List.generate(widget.items.length, (index) {
                       return (widget.items.length-1==index)?Container(
                         width: widget.width,
-                        height: 60,
+                        height: Globals.getHeight(60),
                         decoration: BoxDecoration(
                             color: Color(0xFF231F20),
                             borderRadius: BorderRadius.only(
@@ -125,7 +128,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
                         ),
                       ):Container(
                         width: widget.width,
-                        height: 60,
+                        height: Globals.getHeight(60),
                         decoration: BoxDecoration(
                           color: Color(0xFF231F20),
                           border: Border(

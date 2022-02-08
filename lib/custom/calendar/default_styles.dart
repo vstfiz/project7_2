@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 const TextStyle defaultHeaderTextStyle = const TextStyle(
   fontSize: 20.0,
-  color: Colors.blue,
+  color: Colors.white,
 );
 const TextStyle defaultPrevDaysTextStyle = const TextStyle(
   color: Colors.grey,
@@ -25,7 +25,7 @@ const TextStyle defaultSelectedDayTextStyle = const TextStyle(
   fontSize: 14.0,
 );
 const TextStyle defaultWeekdayTextStyle = const TextStyle(
-  color: Colors.deepOrange,
+  color: Colors.white,
   fontSize: 14.0,
 );
 const TextStyle defaultWeekendTextStyle = const TextStyle(

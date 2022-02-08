@@ -15,6 +15,7 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
+    print(MediaQuery.of(context).devicePixelRatio);
     return Scaffold(
       body: DefaultTabController(
         length: 3,
