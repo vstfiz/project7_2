@@ -4,7 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:project7_2/custom/globals.dart';
+import 'package:project7_2/view/home_screen/home_screen.dart';
 
 class GameCreated extends StatefulWidget {
   _GameCreatedState createState() => _GameCreatedState();
@@ -77,7 +79,14 @@ class _GameCreatedState extends State<GameCreated> {
                     color: Color(0xFF606AD8),
                     borderRadius: BorderRadius.circular(Globals.getWidth(100))),
                 child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(
+                          PageTransition(
+                              type: PageTransitionType.rightToLeft,
+                              child: HomeScreen(initialPage: 2,),
+                              duration: new Duration(milliseconds: 300),
+                              curve: Curves.easeInOut));
+                    },
                     child: Text(
                       'Locker Room',
                       style: GoogleFonts.montserrat(

@@ -10,6 +10,7 @@ import 'package:project7_2/custom/dropdown_calendar/drop_down_calendar.dart';
 import 'package:project7_2/custom/drop_down/custom_drop_down.dart';
 import 'package:project7_2/custom/globals.dart';
 import 'package:project7_2/model/interests.dart';
+import 'package:project7_2/view/new_ui/create_game/game_create_confirmation.dart';
 import 'package:project7_2/view/new_ui/create_game/pick_positions.dart';
 
 class EventSettings extends StatefulWidget {
@@ -22,7 +23,6 @@ class _EventSettingsState extends State<EventSettings>
   TextEditingController _searchTeam = TextEditingController();
   TabController _tabController;
   bool notifications = true;
-  bool publicEvent = true;
 
   @override
   void initState() {
@@ -141,10 +141,10 @@ class _EventSettingsState extends State<EventSettings>
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          FlutterSwitch( value: publicEvent,
+                          FlutterSwitch( value: Globals.publicEvent,
                             onToggle: (value) {
                               setState(() {
-                                publicEvent = !publicEvent;
+                                Globals.publicEvent = !Globals.publicEvent;
                               });
                             },
                             width: Globals.getWidth(58.72),
@@ -154,7 +154,7 @@ class _EventSettingsState extends State<EventSettings>
                             activeColor: Color(0xFF7585FF),
                           ),
                           Text(
-                            publicEvent ? 'On' : 'Off',
+                            Globals.publicEvent ? 'On' : 'Off',
                             style: GoogleFonts.montserrat(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w500,
@@ -239,11 +239,20 @@ class _EventSettingsState extends State<EventSettings>
                   width: Globals.getWidth(185),
                   child: TextButton(
                     onPressed: () {
-                      Navigator.of(context).pushReplacement(PageTransition(
-                          type: PageTransitionType.rightToLeft,
-                          child: PickYourPositions(),
-                          duration: new Duration(milliseconds: 300),
-                          curve: Curves.easeInOut));
+                     if(Globals.publicEvent){
+                       Navigator.of(context).pushReplacement(PageTransition(
+                           type: PageTransitionType.rightToLeft,
+                           child: PickYourPositions(),
+                           duration: new Duration(milliseconds: 300),
+                           curve: Curves.easeInOut));
+                     }
+                     else{
+                       Navigator.of(context).pushReplacement(PageTransition(
+                           type: PageTransitionType.rightToLeft,
+                           child: GameCreateConfirmation(),
+                           duration: new Duration(milliseconds: 300),
+                           curve: Curves.easeInOut));
+                     }
                     },
                     child: Text(
                       'Next',

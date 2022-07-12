@@ -13,6 +13,7 @@ import 'package:project7_2/model/interests.dart';
 import 'package:project7_2/view/new_ui/create_game/create_game_event.dart';
 import 'package:project7_2/view/new_ui/create_game/game_listing_confirmation.dart';
 import 'package:project7_2/view/new_ui/create_game/pick_positions.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class GameCreateConfirmation extends StatefulWidget {
   @override
@@ -22,21 +23,79 @@ class GameCreateConfirmation extends StatefulWidget {
 class _GameCreateConfirmationState extends State<GameCreateConfirmation>{
   List<String> texts = [];
   List<String> icons = [];
+
+  void openCheckout() async {
+    var options = {
+      'key': 'rzp_test_5Iq04OCjzXHNrd',
+      'amount': 2200,
+      'name': 'Arpit',
+      'description': 'Payment',
+      'prefill': {'contact': '8888888888', 'email': 'test@razorpay.com'},
+      'external': {
+        'wallets': ['paytm']
+      }
+    };
+
+    try {
+      _razorpay.open(options);
+    } catch (e) {
+      debugPrint(e);
+    }
+  }
+
+
+  var _razorpay;
   @override
   void initState() {
-    texts.add('12 Players');
-    texts.add('5:00 PM');
-    texts.add('Azad Nagar');
-    texts.add('20/01/2021');
-    texts.add('Football');
-    texts.add('Public Event');
+    texts.add(Globals.numberOfPlayers + ' Players');
+    texts.add(Globals.time);
+    texts.add(Globals.location);
+    texts.add(Globals.date);
+    texts.add(Globals.sport);
+    texts.add(!Globals.publicEvent?'Private Event':'Public Event');
     icons.add('assets/images/onboarding/person_team.png');
     icons.add('assets/images/onboarding/watch.png');
     icons.add('assets/images/onboarding/location_pin.png');
     icons.add('assets/images/onboarding/calendar.png');
     icons.add('assets/images/onboarding/sport_football.png');
     icons.add('assets/images/onboarding/field.png');
+    _razorpay = Razorpay();
+    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
     super.initState();
+  }
+  void _handlePaymentSuccess(PaymentSuccessResponse response) {
+    print('success');
+    // Do something when payment succeeds
+    Navigator.of(context).pushReplacement(PageTransition(
+            type: PageTransitionType.rightToLeft,
+            child: GameListingConfirmation(),
+            duration: new Duration(milliseconds: 300),
+            curve: Curves.easeInOut));
+  }
+
+  void _handlePaymentError(PaymentFailureResponse response) {
+    print('error');
+    print(response.message);
+    Navigator.of(context).pushReplacement(PageTransition(
+            type: PageTransitionType.rightToLeft,
+            child: GameListingConfirmation(),
+            duration: new Duration(milliseconds: 300),
+            curve: Curves.easeInOut));
+
+    // Do something when payment fails
+  }
+
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    print('failed');
+    Navigator.of(context).pushReplacement(PageTransition(
+            type: PageTransitionType.rightToLeft,
+            child: GameListingConfirmation(),
+            duration: new Duration(milliseconds: 300),
+            curve: Curves.easeInOut));
+
+    // Do something when an external wallet was selected
   }
 
   @override
@@ -44,7 +103,7 @@ class _GameCreateConfirmationState extends State<GameCreateConfirmation>{
     return Scaffold(
         body: SingleChildScrollView(
           child: Container(
-            height: Globals.getHeight(1250),
+            height: Globals.getHeight(1000),
             width: Globals.width,
             decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -128,10 +187,10 @@ class _GameCreateConfirmationState extends State<GameCreateConfirmation>{
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              SizedBox(width: Globals.getWidth(45),),
+                              SizedBox(width: Globals.getWidth(30),),
                               Container(
-                                width: Globals.getWidth(50),
-                                height: Globals.getHeight(50),
+                                width: Globals.getWidth(30),
+                                height: Globals.getHeight(30),
                                 decoration: BoxDecoration(
                                     image: DecorationImage(
                                         image: AssetImage(
@@ -157,7 +216,7 @@ class _GameCreateConfirmationState extends State<GameCreateConfirmation>{
                       borderRadius: BorderRadius.circular(Globals.getWidth(8.57)),
                     ),
                   ),
-                  top: Globals.getHeight(480),
+                  top: Globals.getHeight(423),
                 ),
                 Positioned(
                     bottom: Globals.getHeight(100),
@@ -192,11 +251,13 @@ class _GameCreateConfirmationState extends State<GameCreateConfirmation>{
                       width: Globals.getWidth(185),
                       child: TextButton(
                         onPressed: () {
-                          Navigator.of(context).pushReplacement(PageTransition(
-                              type: PageTransitionType.rightToLeft,
-                              child: GameListingConfirmation(),
-                              duration: new Duration(milliseconds: 300),
-                              curve: Curves.easeInOut));
+                          print('trans');
+                          openCheckout();
+                          // Navigator.of(context).pushReplacement(PageTransition(
+                          //     type: PageTransitionType.rightToLeft,
+                          //     child: GameListingConfirmation(),
+                          //     duration: new Duration(milliseconds: 300),
+                          //     curve: Curves.easeInOut));
                         },
                         child: Text(
                           'Create Game',

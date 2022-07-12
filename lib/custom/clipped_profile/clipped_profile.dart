@@ -19,7 +19,7 @@ class ClippedProfileContainer extends StatelessWidget {
               color: Colors.orange,
               shape:BoxShape.circle,
             image: DecorationImage(
-              image: NetworkImage(
+              image: AssetImage(
                 this.imageUrl,
               ),
               fit: BoxFit.cover

@@ -3,6 +3,7 @@
 
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
@@ -18,7 +19,7 @@
         android:label="OnField"
         android:icon="@mipmap/ic_launcher">
        <meta-data android:name="com.google.android.geo.API_KEY"
-           android:value="AIzaSyAXCJc8nuZUxeNtHg_RBibCiqJFOK43PjQ"
+           android:value="AIzaSyDgDE18cGpsGeEEj3mk85ApFwmWvMC2-gg"
            />
         <activity
             android:name=".MainActivity"

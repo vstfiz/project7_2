@@ -5,17 +5,25 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 import 'package:project7_2/model/user.dart' as u;
 import 'package:project7_2/view/find_places/find_places.dart';
+import 'package:project7_2/view/friends/friend_requests.dart';
 import 'package:project7_2/view/locker_room/locker_room.dart';
-import 'package:project7_2/view/news_n_fixtues/news_n_fixtures.dart';
 import 'package:project7_2/view/user_profile/user_profile.dart';
 
 class Globals {
   static double height;
   static double width;
 
+  static List<bool> selectedPositions;
+  static bool publicEvent = false;
+  static String numberOfPlayers = '';
+  static String date = '';
+  static String time = '';
+  static String location = '';
+  static String sport = '';
+
   static u.User user;
   static int currentTab = 1;
-  static var lockerRooms = [];
+  static var lockerRooms = [1, 2];
   static String uid;
   static String name;
   static String email;
@@ -24,16 +32,16 @@ class Globals {
   static bool hasLogin = false;
   static String status = 'rate';
   static bool isFirstRun = true;
-  static PageController pageController = new PageController(initialPage: 1);
+  static PageController pageController;
   static var screens = [
-    NewsNFixtures(),
+    FriendRequests(),
     FindPLaces(),
     LockerRoom(),
     ProfilePage()
   ];
   static GlobalKey<SliderMenuContainerState> keyDrawer;
   static String selectedSport = 'Football';
-  static Map<String,List<String>> positions = {
+  static Map<String, List<String>> positions = {
     'Cricket': [
       'Bowler',
       'Batsmen',
@@ -45,14 +53,14 @@ class Globals {
     'Tennis': ['Left Handed', 'Right Handed'],
     'Squash': ['Left Handed', 'Right Handed'],
     'Golf': ['Left Handed', 'Right Handed'],
-    'Football': ['Defender', 'MidFielder', 'Attacker', 'Goal Keeper','grdrg','fgbdrgeh','gbtdr'],
+    'Football': ['Defender', 'MidFielder', 'Attacker', 'Goal Keeper'],
     'Futsal': ['Forward', 'Winger', 'Defender', 'GoalKeeper'],
     'Pool': ['Left Handed', 'Right Handed'],
     'Billiards': ['Left Handed', 'Right Handed'],
     'Table Tennis': ['Left Handed', 'Right Handed'],
     'Badminton': ['Left Handed', 'Right Handed'],
   };
-
+  static bool quickMode = false;
   static Map teams = {
     'Football': [
       'Liverpool',
@@ -68,17 +76,17 @@ class Globals {
   };
 
   static var teams1 = [
-      'Liverpool',
-      'man united',
-      'chelsea',
-      'real madrid',
-      'barcelona',
-      'psg',
-      'city',
-      'bayern',
-      'arsenal'
-
+    'Liverpool',
+    'man united',
+    'chelsea',
+    'real madrid',
+    'barcelona',
+    'psg',
+    'city',
+    'bayern',
+    'arsenal'
   ];
+
   static double getHeight(double val) {
     return (val / 899) * height;
   }
@@ -95,7 +103,6 @@ class Globals {
     return (val / 432) * width;
   }
 
-
   static String creationUid;
   static String creationEmail;
   static String creationPass;
@@ -104,9 +111,9 @@ class Globals {
   static String creationPosition;
   static String creationTeam;
   static String creationName;
+  static bool isPvP;
   static String creationDob;
   static String creationDp;
   static AuthCredential creationAuthCredential;
   static User creationUser;
-
 }

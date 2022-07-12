@@ -297,6 +297,7 @@ class _CalendarState<T extends EventInterface>
     return Container(
       width: widget.width,
       height: widget.height,
+      padding: EdgeInsets.symmetric(horizontal: 8.0),
       child: Column(
         children: <Widget>[
           CalendarHeader(
@@ -441,9 +442,9 @@ class _CalendarState<T extends EventInterface>
 
     final markedDatesMap = widget.markedDatesMap;
     return Container(
-      height: Globals.getHeight(12),
-      width: Globals.getWidth(12),
-      margin: EdgeInsets.all(Globals.getWidth(5)),
+      height: Globals.getWidth(8),
+      width: Globals.getWidth(8),
+      margin: EdgeInsets.all(Globals.getWidth(3.5)),
       padding: EdgeInsets.all(widget.dayPadding),
       decoration: BoxDecoration(
         color: isToday?Color(0xFF4C5FEF):Colors.transparent,

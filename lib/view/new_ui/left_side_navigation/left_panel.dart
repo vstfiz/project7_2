@@ -130,11 +130,11 @@ class _LeftPanelState extends State<LeftPanel>{
               left: Globals.getWidth(37),
               child: GestureDetector(
                 onTap: (){
-                  Navigator.of(context).push(PageTransition(
-                      type: PageTransitionType.rightToLeft,
-                      child: Teams(),
-                      duration: new Duration(milliseconds: 300),
-                      curve: Curves.easeInOut));
+                  // Navigator.of(context).push(PageTransition(
+                  //     type: PageTransitionType.rightToLeft,
+                  //     child: Teams(),
+                  //     duration: new Duration(milliseconds: 300),
+                  //     curve: Curves.easeInOut));
                 },
                 child: Container(
                   width: Globals.width,
@@ -211,11 +211,11 @@ class _LeftPanelState extends State<LeftPanel>{
               left: Globals.getWidth(37),
               child: GestureDetector(
                 onTap: (){
-                  Navigator.of(context).push(PageTransition(
-                      type: PageTransitionType.rightToLeft,
-                      child: Notifications(),
-                      duration: new Duration(milliseconds: 300),
-                      curve: Curves.easeInOut));
+                  // Navigator.of(context).push(PageTransition(
+                  //     type: PageTransitionType.rightToLeft,
+                  //     child: Notifications(),
+                  //     duration: new Duration(milliseconds: 300),
+                  //     curve: Curves.easeInOut));
                 },
                 child: Container(
                   width: Globals.width,
@@ -291,11 +291,13 @@ class _LeftPanelState extends State<LeftPanel>{
               top: Globals.getHeightLeftPanel(816),
               left: Globals.getWidth(37),
               child: GestureDetector(
-                onTap: (){ Navigator.of(context).push(PageTransition(
-                    type: PageTransitionType.rightToLeft,
-                    child: VenueBookings(),
-                    duration: new Duration(milliseconds: 300),
-                    curve: Curves.easeInOut));},
+                onTap: (){
+                  // Navigator.of(context).push(PageTransition(
+                  //   type: PageTransitionType.rightToLeft,
+                  //   child: VenueBookings(),
+                  //   duration: new Duration(milliseconds: 300),
+                  //   curve: Curves.easeInOut));
+                  },
                 child: Container(
                   width: Globals.width,
                   height: Globals.getHeightLeftPanel(40),

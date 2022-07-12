@@ -1,5 +1,7 @@
 
 import 'dart:async';
+import 'package:achievement_view/achievement_view.dart';
+import 'package:achievement_view/achievement_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +17,8 @@ import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
 import 'package:project7_2/view/user_profile/user_profile.dart';
 
 class BottomNavigation extends StatefulWidget{
+  final int initialPage;
+  const BottomNavigation({Key key, this.initialPage}) : super(key: key);
   @override
   _BottomNavigationState createState() => _BottomNavigationState();
 }
@@ -23,22 +27,22 @@ class _BottomNavigationState extends State<BottomNavigation>{
 
   @override
   void initState() {
+    Globals.pageController = new PageController(initialPage: widget.initialPage??1);
     super.initState();
   }
-
-  GlobalKey<SliderMenuContainerState> _key = new GlobalKey<SliderMenuContainerState>();
   @override
   Widget build(BuildContext context) {
     return SafeArea(child: Scaffold(
         backgroundColor: Colors.black,
         bottomNavigationBar: FancyBottomNavigation(
           tabs: [
-            TabData(icon: Icon(Icons.rss_feed,color: Colors.white,), title: "News & Fixtures"),
-            TabData(icon: Icon(Icons.location_on_outlined,color: Colors.white,), title: "Find Game"),
-            TabData(icon: Icon(Icons.door_back_door_outlined,color: Colors.white,),title: "Locker Room")
+            TabData(iconData: Icons.rss_feed,title: "Friends"),
+            TabData(iconData: Icons.location_on_outlined, title: "Find Game"),
+            TabData(iconData: Icons.door_back_door_outlined,title: "Locker Room")
           ],
           barBackgroundColor: Colors.black,
-          activeIconColor: Colors.white,
+          initialSelection: widget.initialPage??0,
+          activeIconColor: Colors.white,inactiveIconColor: Colors.white,
           textColor: Colors.white,
           circleColor: Colors.blue,
           onTabChangedListener: (position) {
@@ -215,11 +219,29 @@ class _BottomNavigationState extends State<BottomNavigation>{
           ),
           child: TextButton(
             onPressed: () {
-              Navigator.of(context).push(PageTransition(
-                  type: PageTransitionType.rightToLeft,
-                  child: ProfilePage(),
-                  duration: new Duration(milliseconds: 300),
-                  curve: Curves.easeInOut));
+              AchievementView(context,
+                  title: "Anonymous User",
+                  subTitle: "Please sign in to use this feature",
+                  //onTab: _onTabAchievement,
+                  icon: Icon(
+                    Icons.clear,
+                    color: Colors.red,
+                    size: 24,
+                  ),
+                  typeAnimationContent:
+                  AnimationTypeAchievement
+                      .fadeSlideToUp,
+                  borderRadius: 5.0,
+                  color: Colors.blueGrey,
+                  alignment: Alignment.topCenter,
+                  duration: Duration(milliseconds: 1500),
+                  isCircle: true)
+                ..show();
+              // Navigator.of(context).push(PageTransition(
+              //     type: PageTransitionType.rightToLeft,
+              //     child: ProfilePage(),
+              //     duration: new Duration(milliseconds: 300),
+              //     curve: Curves.easeInOut));
             },
             child: Icon(Icons.person,color: Colors.white,size: 18,),
           ),
