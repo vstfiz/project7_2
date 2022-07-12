@@ -3,7 +3,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-//Copy this CustomPainter code to the Bottom of the File
+
 class BasketballPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {

@@ -63,7 +63,7 @@ class _ChatScreenSingleState extends State<ChatScreenSingle> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Text("Kriss Benwat", style: GoogleFonts.montserrat(
+                        Text(this.widget.userName, style: GoogleFonts.montserrat(
                         color: Colors.white,
                         fontSize: Globals.getFontSize(16),
                         fontWeight: FontWeight.w600),),
