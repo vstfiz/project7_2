@@ -39,7 +39,6 @@ class _LoginSocialState extends State<LoginSocial> {
           children: [
             Positioned(
                 top: Globals.getHeight(482),
-                left: Globals.width * 0.05,
                 child: Container(
                   height: Globals.getHeight(58),
                   width: Globals.width * 0.82,
@@ -109,7 +108,6 @@ class _LoginSocialState extends State<LoginSocial> {
                 )),
             Positioned(
                 top: Globals.getHeight(558),
-                left: Globals.width * 0.05,
                 child: Container(
                   height: Globals.getHeight(58),
                   width: Globals.width * 0.82,
@@ -149,7 +147,6 @@ class _LoginSocialState extends State<LoginSocial> {
                 )),
             Positioned(
                 top: Globals.getHeight(634),
-                left: Globals.width * 0.05,
                 child: Container(
                   height: Globals.getHeight(58),
                   width: Globals.width * 0.82,
@@ -161,7 +158,7 @@ class _LoginSocialState extends State<LoginSocial> {
                         width: Globals.width * 0.07,
                         height: Globals.getHeight(30),
                         child: Image.asset(
-                          'assets/images/onboarding/twitter.png',
+                          'assets/images/onboarding/facebook.png',
                           fit: BoxFit.contain,
                         ),
                       ),
@@ -171,7 +168,7 @@ class _LoginSocialState extends State<LoginSocial> {
                       Container(
                         width: Globals.width * 0.55,
                         child: AutoSizeText(
-                          'Login With Twitter'.toUpperCase(),
+                          'Login With facebook'.toUpperCase(),
                           maxLines: 1,
                           style: GoogleFonts.montserrat(
                               fontSize: Globals.getFontSize(17),
@@ -183,13 +180,18 @@ class _LoginSocialState extends State<LoginSocial> {
                     ],
                   )),
                   decoration: BoxDecoration(
-                      color: Color(0xFF5FC9E9),
+                     gradient: LinearGradient(
+                       stops: [0.0,1.0],
+                       colors: [
+                         Color(0xFF4048EF),
+                         Color(0xFF5A7BEF)
+                       ]
+                     ),
                       borderRadius:
                           BorderRadius.circular(Globals.getWidth(10))),
                 )),
             Positioned(
                 top: Globals.getHeight(760),
-                left: Globals.width * 0.05,
                 child: Container(
                   height: Globals.getHeight(58),
                   width: Globals.width * 0.9,

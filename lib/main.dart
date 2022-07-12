@@ -15,6 +15,7 @@ import 'package:project7_2/view/new_ui/create_game/game_create_confirmation.dart
 import 'package:project7_2/view/new_ui/create_game/pick_positions.dart';
 import 'package:project7_2/view/new_ui/locker_room/chat_screen.dart';
 import 'package:project7_2/view/new_ui/locker_room/status.dart';
+import 'package:project7_2/view/new_ui/onboarding/login.dart';
 import 'package:project7_2/view/new_ui/onboarding/splash.dart';
 import 'package:project7_2/view/new_ui/profile/chat_page.dart';
 import 'package:project7_2/view/new_ui/profile/chat_screen_single.dart';
@@ -110,7 +111,7 @@ class MyApp extends StatelessWidget {
                   print(u.uid);
                   Globals.hasLogin = true;
                 }
-                return ChatPage();
+                return Login();
               },
             ));
       });
