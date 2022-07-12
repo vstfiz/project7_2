@@ -6,17 +6,21 @@ import 'package:project7_2/custom/globals.dart';
 import 'package:project7_2/services/auth/auth.dart';
 import 'package:project7_2/view/find_places/3DDrawer.dart';
 import 'package:project7_2/view/find_places/find_places.dart';
+import 'package:project7_2/view/friends/friend_requests.dart';
 import 'package:project7_2/view/home_screen/home_screen.dart';
 import 'package:project7_2/view/new_ui/bottom_navigation/bottom_navigation.dart';
 import 'package:project7_2/view/new_ui/create_game/create_game_event.dart';
 import 'package:project7_2/view/new_ui/create_game/create_game_event_quick.dart';
 import 'package:project7_2/view/new_ui/create_game/game_create_confirmation.dart';
 import 'package:project7_2/view/new_ui/create_game/pick_positions.dart';
-import 'package:project7_2/view/new_ui/fields/badminton.dart';
-import 'package:project7_2/view/new_ui/fields/basketball.dart';
+import 'package:project7_2/view/new_ui/locker_room/chat_screen.dart';
+import 'package:project7_2/view/new_ui/locker_room/status.dart';
 import 'package:project7_2/view/new_ui/onboarding/splash.dart';
+import 'package:project7_2/view/new_ui/profile/chat_page.dart';
+import 'package:project7_2/view/new_ui/profile/chat_screen_single.dart';
 import 'package:project7_2/view/new_ui/right_side_drawer/right_navigation.dart';
 import 'package:project7_2/view/new_ui/score_card/score_card.dart';
+import 'package:project7_2/view/new_ui/search/search_edit.dart';
 
 import 'package:project7_2/view/new_ui/splash/splash.dart';
 import 'package:project7_2/view/user_profile/user_profile.dart';
@@ -106,7 +110,7 @@ class MyApp extends StatelessWidget {
                   print(u.uid);
                   Globals.hasLogin = true;
                 }
-                return ScoreCard();
+                return ChatPage();
               },
             ));
       });

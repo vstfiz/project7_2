@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:project7_2/model/invites.dart';
 
 import '../../custom/globals.dart';
+import '../new_ui/search/search_edit.dart';
 
 class FriendRequests extends StatefulWidget{
   @override
@@ -30,6 +31,28 @@ class _FriendRequestsState extends State<FriendRequests>{
   @override
   Widget build(BuildContext context){
     return Scaffold(
+      appBar: AppBar(
+        elevation: 10.0,
+        backgroundColor: Color(0xFF121217),
+        actions: [
+          SizedBox(
+            width: 50,
+          ),
+          GestureDetector(
+            onTap: (){
+              Navigator.of(context).push(new MaterialPageRoute(builder: (context){
+                return SearchEdit();
+              }));
+            },
+            child: Icon(Icons.search,color: Colors.white,size: 24,),
+
+          ),
+          SizedBox(
+            width: 20,
+          ),
+        ],
+
+      ),
         backgroundColor: Color(0xFF121217),
       body: Stack(
         children: [

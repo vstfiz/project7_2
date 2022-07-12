@@ -7,6 +7,8 @@ import 'package:project7_2/model/user.dart' as u;
 import 'package:project7_2/view/find_places/find_places.dart';
 import 'package:project7_2/view/friends/friend_requests.dart';
 import 'package:project7_2/view/locker_room/locker_room.dart';
+import 'package:project7_2/view/new_ui/painters/badminton.dart';
+import 'package:project7_2/view/new_ui/score_card/score_card.dart';
 import 'package:project7_2/view/user_profile/user_profile.dart';
 
 class Globals {
@@ -37,7 +39,8 @@ class Globals {
     FriendRequests(),
     FindPLaces(),
     LockerRoom(),
-    ProfilePage()
+    ProfilePage(),
+    ScoreCard()
   ];
   static GlobalKey<SliderMenuContainerState> keyDrawer;
   static String selectedSport = 'Football';
@@ -87,6 +90,12 @@ class Globals {
     'arsenal'
   ];
 
+
+  static Map<String, dynamic> painters = {
+    'badminton': BadmintonPainter(),
+  };
+
+  static List<String> myTeams = ['Team 1', 'Players', 'VCT', '100T', 'Sentinels'];
   static double getHeight(double val) {
     return (val / 899) * height;
   }

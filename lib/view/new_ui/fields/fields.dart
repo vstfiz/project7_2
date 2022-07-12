@@ -6,17 +6,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project7_2/custom/globals.dart';
+import 'package:project7_2/view/new_ui/fields/lineup_confirmation.dart';
 import 'package:project7_2/view/new_ui/painters/badminton.dart';
 import 'package:toast/toast.dart';
 
 import '../../../custom/draggable_card/dragable_card.dart';
 import '../painters/basketball.dart';
 
-class BadmintonField extends StatefulWidget {
-  _BadmintonFieldState createState() => _BadmintonFieldState();
+class GameField extends StatefulWidget {
+  String sportName;
+
+
+  GameField( {this.sportName});
+
+  _GameFieldState createState() => _GameFieldState();
 }
 
-class _BadmintonFieldState extends State<BadmintonField> {
+class _GameFieldState extends State<GameField> {
 
   List<String> playersOnField = [];
   List<String> playerList = ['Arpit', 'Kireet', 'Rahul', 'Vivek','Prinu'];
@@ -195,6 +201,9 @@ class _BadmintonFieldState extends State<BadmintonField> {
             ),
             GestureDetector(
               onTap: () {
+      showDialog(barrierColor: Color(0x01000000),context: context, builder: (context){
+          return lineup_confirmation(context);
+                    });
               },
               child: Icon(
                 Icons.check,
@@ -219,7 +228,7 @@ class _BadmintonFieldState extends State<BadmintonField> {
           children: [
             CustomPaint(
               size: Size(Globals.width, Globals.height),
-              painter: BadmintonPainter(),
+              painter: Globals.painters['badminton'],
             ),
             Container(
               height: Globals.height,

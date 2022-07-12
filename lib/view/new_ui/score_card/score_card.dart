@@ -1,10 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:page_transition/page_transition.dart';
-
 import '../../../custom/globals.dart';
-import '../left_side_navigation/left_panel.dart';
 
 class ScoreCard extends StatefulWidget {
   @override
@@ -39,8 +36,6 @@ class _ScoreCardState extends State<ScoreCard> {
           Container(
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.grey[800].withOpacity(0.7),
               ),
               child: Text(
                 'Score Card',
@@ -98,7 +93,7 @@ class _ScoreCardState extends State<ScoreCard> {
       body: SingleChildScrollView(
         child: Container(
           width: Globals.width,
-          height: Globals.getHeight(1000),
+          height: Globals.getHeight(1300),
           child: Stack(
             alignment: Alignment.center,
             children: [
@@ -162,6 +157,450 @@ class _ScoreCardState extends State<ScoreCard> {
                       ),
                     ],
                   )),
+              Positioned(child: Container(
+                width: Globals.width,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: Globals.getWidth(35),
+                    ),
+                    Container(
+                      width: Globals.getWidth(150),
+                      child: Text(
+                        'Half 1',
+                        style: GoogleFonts.montserrat(
+                            color: Color(0xFf6C7B8A),
+                            fontSize: Globals.getFontSize(13),
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                    SizedBox(
+                      width: Globals.getWidth(80),
+                    ),
+                    Container(
+                      width: Globals.getWidth(20),
+                      child: Text(
+                        'F1',
+                        style: GoogleFonts.montserrat(
+                            color: Color(0xFf6C7B8A),
+                            fontSize: Globals.getFontSize(13),
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                    SizedBox(
+                      width: Globals.getWidth(18),
+                    ),
+                    Container(
+                      width: Globals.getWidth(20),
+                      child: Text(
+                        'F2',
+                        style: GoogleFonts.montserrat(
+                            color: Color(0xFf6C7B8A),
+                            fontSize: Globals.getFontSize(13),
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                    SizedBox(
+                      width: Globals.getWidth(18),
+                    ),
+                    Container(
+                      width: Globals.getWidth(20),
+                      child: Text(
+                        'F3',
+                        style: GoogleFonts.montserrat(
+                            color: Color(0xFf6C7B8A),
+                            fontSize: Globals.getFontSize(13),
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                    SizedBox(
+                      width: Globals.getWidth(18),
+                    ),
+                    Container(
+                      width: Globals.getWidth(20),
+                      child: Text(
+                        'F4',
+                        style: GoogleFonts.montserrat(
+                            color: Color(0xFf6C7B8A),
+                            fontSize: Globals.getFontSize(13),
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ),
+
+                  ],
+                ),
+              ),
+              top: Globals.getHeight(110),),
+              Positioned(child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: List.generate(5, (index){
+                  return Container(
+                    width: Globals.width - 15,
+                    height: Globals.getHeight(64),
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                          color: Colors.white,
+                          width: 1.0
+                        )
+                      )
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: Globals.getWidth(35),
+                        ),
+                        Container(
+                          width: Globals.getWidth(44),
+                          height: Globals.getWidth(44),
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                  image:
+                                  AssetImage('assets/images/profile-image.png'),
+                                  fit: BoxFit.cover)),
+                        ),
+                        SizedBox(
+                          width: Globals.getWidth(15),
+                        ),
+                        Container(
+                          width: Globals.getWidth(150),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Player Name',
+                                style: GoogleFonts.montserrat(
+                                    color: Colors.white,
+                                    fontSize: Globals.getFontSize(14),
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              Text(
+                                'Player Status',
+                                style: GoogleFonts.montserrat(
+                                    color: Colors.white,
+                                    fontSize: Globals.getFontSize(10),
+                                    fontWeight: FontWeight.w500),
+                              )
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          width: Globals.getWidth(18),
+                        ),
+                        Container(
+                          width: Globals.getWidth(20),
+                          child: Text(
+                            '25',
+                            style: GoogleFonts.montserrat(
+                                color: Colors.white,
+                                fontSize: Globals.getFontSize(13),
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                        SizedBox(
+                          width: Globals.getWidth(18),
+                        ),
+                        Container(
+                          width: Globals.getWidth(20),
+                          child: Text(
+                            '12',
+                            style: GoogleFonts.montserrat(
+                                color: Colors.white,
+                                fontSize: Globals.getFontSize(13),
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                        SizedBox(
+                          width: Globals.getWidth(18),
+                        ),
+                        Container(
+                          width: Globals.getWidth(20),
+                          child: Text(
+                            '12',
+                            style: GoogleFonts.montserrat(
+                                color: Colors.white,
+                                fontSize: Globals.getFontSize(13),
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                        SizedBox(
+                          width: Globals.getWidth(18),
+                        ),
+                        Container(
+                          width: Globals.getWidth(20),
+                          child: Text(
+                            '104',
+                            style: GoogleFonts.montserrat(
+                                color: Colors.white,
+                                fontSize: Globals.getFontSize(13),
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ),
+
+                      ],
+                    ),
+                  );
+                }),
+              ),
+                top: Globals.getHeight(130),),
+              Positioned(child: Container(
+                width: Globals.width,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: Globals.getWidth(35),
+                    ),
+                    Container(
+                      width: Globals.getWidth(150),
+                      child: Text(
+                        'Half 2',
+                        style: GoogleFonts.montserrat(
+                            color: Color(0xFf6C7B8A),
+                            fontSize: Globals.getFontSize(13),
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                    SizedBox(
+                      width: Globals.getWidth(80),
+                    ),
+                    Container(
+                      width: Globals.getWidth(20),
+                      child: Text(
+                        'F1',
+                        style: GoogleFonts.montserrat(
+                            color: Color(0xFf6C7B8A),
+                            fontSize: Globals.getFontSize(13),
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                    SizedBox(
+                      width: Globals.getWidth(18),
+                    ),
+                    Container(
+                      width: Globals.getWidth(20),
+                      child: Text(
+                        'F2',
+                        style: GoogleFonts.montserrat(
+                            color: Color(0xFf6C7B8A),
+                            fontSize: Globals.getFontSize(13),
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                    SizedBox(
+                      width: Globals.getWidth(18),
+                    ),
+                    Container(
+                      width: Globals.getWidth(20),
+                      child: Text(
+                        'F3',
+                        style: GoogleFonts.montserrat(
+                            color: Color(0xFf6C7B8A),
+                            fontSize: Globals.getFontSize(13),
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                    SizedBox(
+                      width: Globals.getWidth(18),
+                    ),
+                    Container(
+                      width: Globals.getWidth(20),
+                      child: Text(
+                        'F4',
+                        style: GoogleFonts.montserrat(
+                            color: Color(0xFf6C7B8A),
+                            fontSize: Globals.getFontSize(13),
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ),
+
+                  ],
+                ),
+              ),
+                top: Globals.getHeight(500),),
+              Positioned(child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: List.generate(5, (index){
+                  return Container(
+                    width: Globals.width - 15,
+                    height: Globals.getHeight(64),
+                    decoration: BoxDecoration(
+                        border: Border(
+                            bottom: BorderSide(
+                                color: Colors.white,
+                                width: 1.0
+                            )
+                        )
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: Globals.getWidth(35),
+                        ),
+                        Container(
+                          width: Globals.getWidth(44),
+                          height: Globals.getWidth(44),
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                  image:
+                                  AssetImage('assets/images/profile-image.png'),
+                                  fit: BoxFit.cover)),
+                        ),
+                        SizedBox(
+                          width: Globals.getWidth(15),
+                        ),
+                        Container(
+                          width: Globals.getWidth(150),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Player Name',
+                                style: GoogleFonts.montserrat(
+                                    color: Colors.white,
+                                    fontSize: Globals.getFontSize(14),
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              Text(
+                                'Player Status',
+                                style: GoogleFonts.montserrat(
+                                    color: Colors.white,
+                                    fontSize: Globals.getFontSize(10),
+                                    fontWeight: FontWeight.w500),
+                              )
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          width: Globals.getWidth(18),
+                        ),
+                        Container(
+                          width: Globals.getWidth(20),
+                          child: Text(
+                            '25',
+                            style: GoogleFonts.montserrat(
+                                color: Colors.white,
+                                fontSize: Globals.getFontSize(13),
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                        SizedBox(
+                          width: Globals.getWidth(18),
+                        ),
+                        Container(
+                          width: Globals.getWidth(20),
+                          child: Text(
+                            '12',
+                            style: GoogleFonts.montserrat(
+                                color: Colors.white,
+                                fontSize: Globals.getFontSize(13),
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                        SizedBox(
+                          width: Globals.getWidth(18),
+                        ),
+                        Container(
+                          width: Globals.getWidth(20),
+                          child: Text(
+                            '12',
+                            style: GoogleFonts.montserrat(
+                                color: Colors.white,
+                                fontSize: Globals.getFontSize(13),
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                        SizedBox(
+                          width: Globals.getWidth(18),
+                        ),
+                        Container(
+                          width: Globals.getWidth(20),
+                          child: Text(
+                            '104',
+                            style: GoogleFonts.montserrat(
+                                color: Colors.white,
+                                fontSize: Globals.getFontSize(13),
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ),
+
+                      ],
+                    ),
+                  );
+                }),
+              ),
+                top: Globals.getHeight(520),),
+              Positioned(child:
+              Container(
+                width: Globals.getWidth(150),
+                child: Text(
+                  'HighLights',
+                  style: GoogleFonts.montserrat(
+                      color: Color(0xFf6C7B8A),
+                      fontSize: Globals.getFontSize(13),
+                      fontWeight: FontWeight.w500),
+                ),
+              ),
+                top: Globals.getHeight(890),left: Globals.getWidth(35),),
+              Positioned(child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: List.generate(5, (index){
+                  return Container(
+                    width: Globals.width - 15,
+                    height: Globals.getHeight(64),
+                    decoration: BoxDecoration(
+                        border: Border(
+                            bottom: BorderSide(
+                                color: Colors.white,
+                                width: 1.0
+                            )
+                        )
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: Globals.getWidth(35),
+                        ),
+                        Container(
+                          width: Globals.getWidth(44),
+                          height: Globals.getWidth(44),
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                  image:
+                                  AssetImage('assets/images/cricket_generic.png'),
+                                  fit: BoxFit.cover)),
+                        ),
+                        SizedBox(
+                          width: Globals.getWidth(15),
+                        ),
+                        Container(
+                          width: Globals.getWidth(300),
+                          child: Text(
+                            'Ryan won the toss and took batting',
+                            style: GoogleFonts.montserrat(
+                                color: Colors.white,
+                                fontSize: Globals.getFontSize(14),
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }),
+              ),
+                top: Globals.getHeight(910),),
             ],
           ),
         ),

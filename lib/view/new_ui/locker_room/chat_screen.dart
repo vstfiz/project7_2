@@ -4,10 +4,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:project7_2/custom/clipped_profile/clipped_profile.dart';
 import 'package:project7_2/custom/globals.dart';
 import 'package:project7_2/model/chat_messages.dart';
-import 'package:project7_2/view/new_ui/fields/badminton.dart';
 import 'dart:math' as math;
 
-import 'package:project7_2/view/new_ui/fields/basketball.dart';
+import '../fields/fields.dart';
+import 'match_data.dart';
 
 class ChatScreen extends StatefulWidget {
   _ChatScreenState createState() => _ChatScreenState();
@@ -40,12 +40,74 @@ class _ChatScreenState extends State<ChatScreen> {
     Color(0xFFA573FF)
   ];
 
+  List<Option> options = [];
   String _lastWords = '';
+  List<String> texts = [];
+  List<String> icons = [];
 
   @override
   void initState() {
     // initSpeechState();
-    _bodyStack = _chatStack();
+    texts.add('5:00 PM');
+    texts.add('Azad Nagar');
+    texts.add('12/05/2000');
+    texts.add('Football');
+    icons.add('assets/images/onboarding/watch.png');
+    icons.add('assets/images/onboarding/location_pin.png');
+    icons.add('assets/images/onboarding/calendar.png');
+    icons.add('assets/images/onboarding/sport_football.png');
+    options.add(Option(
+        imagePath: 'assets/images/info_menutiem.png',
+        name: 'Game info',
+        OnTapOption: () {
+          showDialog(
+              barrierColor: Color(0x01000000),
+              context: context,
+              builder: (context) {
+                return match_data(context, texts, icons);
+              });
+        }));
+    options.add(Option(
+        imagePath: 'assets/images/lineup_menuitem.png',
+        name: 'LineUp',
+        OnTapOption: () {
+          Navigator.of(context).push(new MaterialPageRoute(builder: (context) {
+            return GameField(sportName: 'badminton');
+          }));
+        }));
+    options.add(Option(
+        imagePath: 'assets/images/users_menuitem.png',
+        name: 'Mates',
+        OnTapOption: () {
+          showDialog(
+              barrierColor: Color(0x01000000),
+              context: context,
+              builder: (context) {
+                return match_data(context, texts, icons);
+              });
+        }));
+    options.add(Option(
+        imagePath: 'assets/images/edit_menuitem.png',
+        name: 'Edit',
+        OnTapOption: () {
+          showDialog(
+              barrierColor: Color(0x01000000),
+              context: context,
+              builder: (context) {
+                return match_data(context, texts, icons);
+              });
+        }));
+    options.add(Option(
+        imagePath: 'assets/images/leave_menuitem.png',
+        name: 'Leave Room',
+        OnTapOption: () {
+          showDialog(
+              barrierColor: Color(0x01000000),
+              context: context,
+              builder: (context) {
+                return match_data(context, texts, icons);
+              });
+        }));
     super.initState();
   }
 
@@ -108,7 +170,6 @@ class _ChatScreenState extends State<ChatScreen> {
 
   TextEditingController _messageController = TextEditingController();
   bool isMenuOpen = false;
-  List<String> options = ['Game info', 'lineup', 'team mates', 'leave room'];
   FocusNode _focusNode = FocusNode();
   var _bodyStack;
 
@@ -153,93 +214,97 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
                 isMenuOpen
                     ? SizedBox()
-                    : Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
+                    :
+                    // Container(
+                    //         decoration: BoxDecoration(
+                    //           shape: BoxShape.circle,
+                    //         ),
+                    //         child: GestureDetector(
+                    //           onTap: (){
+                    //             Navigator.of(context)
+                    //                 .push(new MaterialPageRoute(
+                    //                 builder: (context) {
+                    //                   return GameField(sportName: 'badminton');
+                    //                 }));
+                    //           },
+                    //           child: Icon(
+                    //             Icons.more_vert,
+                    //             color: Colors.white,
+                    //           ),
+                    //         )
+
+                    PopupMenuButton(
+                        icon: Icon(
+                          Icons.more_vert,
+                          color: Colors.white,
                         ),
-                        child: GestureDetector(
-                          onTap: (){
-                            Navigator.of(context)
-                                .push(new MaterialPageRoute(
-                                builder: (context) {
-                                  return BadmintonField();
-                                }));
-                          },
-                          child: Icon(
-                            Icons.more_vert,
-                            color: Colors.white,
-                          ),
-                        )
+                        color: Colors.black,
+                        itemBuilder: (_) =>
+                            List.generate(options.length, (index) {
+                              return PopupMenuItem<String>(
+                                child: Container(
+                                  color: Colors.black,
+                                  child: GestureDetector(
+                                    onTap: options[index].OnTapOption,
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Container(
+                                          width: Globals.getWidth(15),
+                                          height: Globals.getHeight(15),
+                                          decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                  image: AssetImage(
+                                                      options[index].imagePath),
+                                                  fit: BoxFit.contain)),
+                                        ),
+                                        SizedBox(
+                                          width: 20,
+                                        ),
+                                        Text(
+                                          options[index].name.toUpperCase(),
+                                          style: GoogleFonts.montserrat(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.white),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                onTap: () {},
+                              );
+                            }))
 
-
-                        // PopupMenuButton(
-                        //     icon: Icon(
-                        //       Icons.more_vert,
-                        //       color: Colors.white,
-                        //     ),
-                        //     color: Colors.black,
-                        //     itemBuilder: (_) =>
-                        //         List.generate(options.length, (index) {
-                        //           return PopupMenuItem<String>(
-                        //             child: Container(
-                        //               color: Colors.black,
-                        //               child: Row(
-                        //                 children: [
-                        //                   SizedBox(
-                        //                     width: 10,
-                        //                   ),
-                        //                   Icon(
-                        //                     Icons.notifications,
-                        //                     color: Colors.white,
-                        //                     size: 12,
-                        //                   ),
-                        //                   SizedBox(
-                        //                     width: 20,
-                        //                   ),
-                        //                   Text(
-                        //                     options[index].toUpperCase(),
-                        //                     style: GoogleFonts.montserrat(
-                        //                         fontSize: 12,
-                        //                         fontWeight: FontWeight.w500,
-                        //                         color: Colors.white),
-                        //                   )
-                        //                 ],
-                        //               ),
-                        //             ),
-                        //             onTap: () {
-                        //
-                        //             },
-                        //           );
-                        //         }))
-
-                        // TextButton(
-                        //   onPressed: () {
-                        //     setState(() {
-                        //       isMenuOpen = !isMenuOpen;
-                        //     });
-                        //   },
-                        //   child: Icon(
-                        //     Icons.more_vert,
-                        //     color: Colors.white,
-                        //   ),
-                        //   style: ButtonStyle(
-                        //       overlayColor: MaterialStateProperty.all(
-                        //           Color(0xFFC4C4C4).withOpacity(0.11)),
-                        //       shape:
-                        //           MaterialStateProperty.all<RoundedRectangleBorder>(
-                        //         RoundedRectangleBorder(
-                        //             borderRadius: BorderRadius.circular(50.0),
-                        //             side: BorderSide(color: Colors.transparent)),
-                        //       )),
-                        // ),
-                        )
+                // TextButton(
+                //   onPressed: () {
+                //     setState(() {
+                //       isMenuOpen = !isMenuOpen;
+                //     });
+                //   },
+                //   child: Icon(
+                //     Icons.more_vert,
+                //     color: Colors.white,
+                //   ),
+                //   style: ButtonStyle(
+                //       overlayColor: MaterialStateProperty.all(
+                //           Color(0xFFC4C4C4).withOpacity(0.11)),
+                //       shape:
+                //           MaterialStateProperty.all<RoundedRectangleBorder>(
+                //         RoundedRectangleBorder(
+                //             borderRadius: BorderRadius.circular(50.0),
+                //             side: BorderSide(color: Colors.transparent)),
+                //       )),
+                // ),
               ],
             ),
           ),
         ),
       ),
       backgroundColor: Color(0xFF0F0F0F),
-      body: isMenuOpen ? _lineUpStack() : _chatStack(),
+      body: _chatStack(),
     );
   }
 
@@ -264,11 +329,25 @@ class _ChatScreenState extends State<ChatScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: List.generate(4, (index) {
-                      return ClippedProfileContainer(
-                        imageUrl: 'assets/images/left_panel/profile_image.png',
-                        height: Globals.getWidth(50),
-                        width: Globals.getWidth(50),
-                      );
+                      return index == 3
+                          ? Container(
+                              height: Globals.getWidth(50),
+                              width: Globals.getWidth(50),
+                              decoration: BoxDecoration(
+                                  color: Colors.orange,
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                      image: AssetImage(
+                                        'assets/images/left_panel/profile_image.png',
+                                      ),
+                                      fit: BoxFit.cover)),
+                            )
+                          : ClippedProfileContainer(
+                              imageUrl:
+                                  'assets/images/left_panel/profile_image.png',
+                              height: Globals.getWidth(50),
+                              width: Globals.getWidth(50),
+                            );
                     }),
                   ),
                 ],
@@ -486,4 +565,12 @@ class _ChatScreenState extends State<ChatScreen> {
       ],
     );
   }
+}
+
+class Option {
+  String imagePath;
+  String name;
+  void Function() OnTapOption;
+
+  Option({this.imagePath, this.name, this.OnTapOption});
 }

@@ -27,9 +27,13 @@ import 'package:project7_2/utils/constants.dart';
 import 'package:project7_2/view/auth/signin.dart';
 import 'package:project7_2/view/new_ui/create_game/create_game_event.dart';
 import 'package:project7_2/view/new_ui/left_side_navigation/left_panel.dart';
+import 'package:project7_2/view/new_ui/locker_room/request_confirmation.dart';
 import 'package:project7_2/view/user_profile/user_profile.dart';
 
 import '../../custom/calendar/calendar.dart';
+import '../new_ui/locker_room/match_data.dart';
+import '../new_ui/locker_room/request_confirmed.dart';
+import '../new_ui/locker_room/request_sent.dart';
 
 class FindPLaces extends StatefulWidget {
   _FindPLacesState createState() => _FindPLacesState();
@@ -56,6 +60,8 @@ class _FindPLacesState extends State<FindPLaces> {
     'Football',
     'Badminton'
   ];
+  List<String> texts = [];
+  List<String> icons = [];
   String locationValue = '...';
 
   Future<void> _loadingDialog(String value) {
@@ -97,6 +103,14 @@ class _FindPLacesState extends State<FindPLaces> {
   void initState() {
     super.initState();
     _loadMapStyles();
+    texts.add('5:00 PM');
+    texts.add('Azad Nagar');
+    texts.add('12/05/2000');
+    texts.add('Football');
+    icons.add('assets/images/onboarding/watch.png');
+    icons.add('assets/images/onboarding/location_pin.png');
+    icons.add('assets/images/onboarding/calendar.png');
+    icons.add('assets/images/onboarding/sport_football.png');
   }
 
   _getCustomIcon(double latitude, double longitude) async {
@@ -145,6 +159,8 @@ class _FindPLacesState extends State<FindPLaces> {
     ).image;
     return BitmapDescriptor.fromBytes(bytes.buffer.asUint8List());
   }
+
+
 
   Future _loadMapStyles() async {
     _darkMapStyle =
@@ -945,23 +961,11 @@ class _FindPLacesState extends State<FindPLaces> {
                       ),
                       child: GestureDetector(
                         onTap: () {
-                          AchievementView(context,
-                              title: "Logged In!",
-                              subTitle: "You successfully logged in",
-                              //onTab: _onTabAchievement,
-                              icon: Icon(
-                                Icons.check,
-                                color: Colors.green,
-                                size: 24,
-                              ),
-                              typeAnimationContent:
-                                  AnimationTypeAchievement.fadeSlideToUp,
-                              borderRadius: 5.0,
-                              color: Colors.blueGrey,
-                              alignment: Alignment.topCenter,
-                              duration: Duration(seconds: 3),
-                              isCircle: true)
-                            ..show();
+                          // showDialog(barrierColor: Color(0x01000000),context: context, builder: (context){
+                          //   return match_data(context,texts, icons);
+                          // });
+                          Globals.currentTab = 1;
+                          Globals.pageController.jumpToPage(4);
                         },
                         child: Icon(
                           Icons.calendar_today_outlined,
