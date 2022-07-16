@@ -1,7 +1,6 @@
 import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart' as fAuth;
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -12,7 +11,6 @@ import 'package:page_transition/page_transition.dart';
 import 'package:project7_2/custom/globals.dart';
 import 'package:project7_2/database/firebase.dart';
 import 'package:project7_2/services/auth/auth.dart';
-import 'package:project7_2/view/find_places/find_places.dart';
 import 'package:project7_2/view/home_screen/home_screen.dart';
 import 'package:project7_2/view/new_ui/onboarding/fill.dart';
 import 'package:project7_2/view/new_ui/onboarding/login.dart';

@@ -962,7 +962,7 @@ class _FindPLacesState extends State<FindPLaces> {
                       child: GestureDetector(
                         onTap: () {
                           // showDialog(barrierColor: Color(0x01000000),context: context, builder: (context){
-                          //   return match_data(context,texts, icons);
+                          //   return match_data(context,texts,icons);
                           // });
                           Globals.currentTab = 1;
                           Globals.pageController.jumpToPage(4);
